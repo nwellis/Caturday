@@ -99,7 +99,7 @@ fun <Body, Model> Call<Body>.asRepositoryRequest(resources: Resources, mapper: (
 
 private fun <T> Response<T>.toRepositoryError(resources: Resources): RepositoryError {
   return RepositoryError(
-    message = errorBody()?.toString() ?: resources.getString(R.string.error_default),
+    message = errorBody()?.string() ?: resources.getString(R.string.error_default),
     cause = HttpException(this)
   )
 }
