@@ -32,7 +32,7 @@ typealias OnCancelledCallback = (succeeded: Boolean) -> Unit
  * and for normal callback use there is [enqueue] and [enqueueWith]. Typical usage of enqueue:
  *
  * ```
- * repository.getFoo().enqueue { response ->
+ * repository.getFoo().enqueueWith(activity.lifecycle) { response ->
  *   when (response) {
  *     is SuccessResponse -> Log.i(TAG, "Success! ${response.data}")
  *     is ErrorResponse -> Log.e(TAG, "Failure, ${response.error}")
