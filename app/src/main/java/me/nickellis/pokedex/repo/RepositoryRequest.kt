@@ -174,7 +174,7 @@ class RetrofitRequest<Body, Model>(
   }
 
   @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-  private fun onStop() {
+  protected fun onStop() {
     call.cancel()
   }
 }
