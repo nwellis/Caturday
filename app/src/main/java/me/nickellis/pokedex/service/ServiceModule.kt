@@ -28,7 +28,7 @@ class ServiceModule {
   @Provides @Singleton @Named("CatHttpClient")
   fun okhttpClient(): OkHttpClient {
     return OkHttpClient.Builder()
-      .addInterceptor(AddHeadersInterceptor())
+      .addInterceptor(CatApiHeadersInterceptor())
       .build()
   }
 
