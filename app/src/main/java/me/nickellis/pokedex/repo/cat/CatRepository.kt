@@ -38,7 +38,7 @@ class ApiCatRepository(
       .asRepositoryRequest(
         resources = context.resources,
         mapper = { apiCatImages ->
-          apiCatImages.mapNotNull { apiCatImage ->
+          apiCatImages.map { apiCatImage ->
             CatImage(
               id = apiCatImage.id.ensureNonNullId("Found null ID from cat API get images"),
               url = apiCatImage.url
