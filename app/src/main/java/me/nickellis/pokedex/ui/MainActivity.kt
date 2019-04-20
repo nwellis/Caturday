@@ -1,7 +1,8 @@
-package me.nickellis.pokedex
+package me.nickellis.pokedex.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import me.nickellis.pokedex.R
 
 class MainActivity : AppCompatActivity() {
 
