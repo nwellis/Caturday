@@ -159,7 +159,9 @@ class RetrofitRequest<Body, Model>(
               )
             )
           } catch (ex: Exception) {
-            Log.e(TAG, "Failed to parse successful response from API for ${call.request().url()}. Is the model correct?", ex)
+            Log.e(TAG, "Failed to parse successful response from API at ${call.request().url()}. " +
+                "Is the model definition correct?", ex)
+
             callback(ErrorResponse(
               error = errorHandler.handleFailure(ex)
             ))
