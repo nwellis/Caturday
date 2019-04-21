@@ -170,6 +170,9 @@ class RetrofitRequest<Body, Model>(
   override fun cancel(onCanceled: OnCancelledCallback?) {
     if (isExecuted && !isCancelled) {
       call.cancel()
+      onCanceled?.invoke(true)
+    } else {
+      onCanceled?.invoke(false)
     }
   }
 
