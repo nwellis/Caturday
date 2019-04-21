@@ -1,19 +1,15 @@
 package me.nickellis.pokedex.service
 
 import android.content.Context
-import android.content.res.Resources
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import me.nickellis.pokedex.BuildConfig
-import me.nickellis.pokedex.service.ServiceModule.Names.CatHttpClient
 import me.nickellis.pokedex.service.cat.CatApiError
 import me.nickellis.pokedex.service.cat.CatService
 import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
-import retrofit2.Converter
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -8,8 +8,10 @@ import androidx.lifecycle.OnLifecycleEvent
 import kotlinx.coroutines.suspendCancellableCoroutine
 import me.nickellis.pokedex.R
 import me.nickellis.pokedex.service.ErrorHandler
-import okhttp3.ResponseBody
-import retrofit2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.HttpException
+import retrofit2.Response
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 

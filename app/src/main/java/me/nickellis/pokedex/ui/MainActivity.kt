@@ -1,7 +1,7 @@
 package me.nickellis.pokedex.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import me.nickellis.pokedex.R
 import me.nickellis.pokedex.injector
