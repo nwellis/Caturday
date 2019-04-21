@@ -39,10 +39,12 @@ class ServiceModule {
   ): Retrofit {
     return Retrofit.Builder()
       .baseUrl("https://api.thecatapi.com")
-      .addConverterFactory(GsonConverterFactory.create())
+      .client(client)
+      .addConverterFactory(GsonConverterFactory.create(gson))
       .build()
   }
 
+  @Provides @Singleton
   fun catService(@Named("CatRetrofit") retrofit: Retrofit): CatService {
     return retrofit.create(CatService::class.java)
   }
