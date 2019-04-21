@@ -1,13 +1,15 @@
 package me.nickellis.pokedex.repo.cat
 
-import android.content.Context
+
 import me.nickellis.pokedex.domain.CatImage
 import me.nickellis.pokedex.ktx.ensureNonNullId
 import me.nickellis.pokedex.repo.RepositoryRequest
 import me.nickellis.pokedex.repo.asRepositoryRequest
+import me.nickellis.pokedex.service.ErrorHandler
 import me.nickellis.pokedex.service.cat.CatImageSize
 import me.nickellis.pokedex.service.cat.CatImagesQuery
 import me.nickellis.pokedex.service.cat.CatService
+import retrofit2.Response
 
 
 interface CatRepository {
@@ -18,7 +20,7 @@ interface CatRepository {
 }
 
 class ApiCatRepository(
-  private val context: Context,
+  private val errorHandler: ErrorHandler<Response<*>>,
   private val catService: CatService
 ): CatRepository {
 
@@ -36,7 +38,7 @@ class ApiCatRepository(
     return catService
       .searchCatImages(size = size, page = query.page, limit = pageSize)
       .asRepositoryRequest(
-        resources = context.resources,
+        errorHandler = errorHandler,
         mapper = { apiCatImages ->
           apiCatImages.map { apiCatImage ->
             CatImage(

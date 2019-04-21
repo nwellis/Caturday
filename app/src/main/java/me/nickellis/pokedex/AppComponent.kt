@@ -5,9 +5,12 @@ import android.content.Context
 import dagger.Component
 import me.nickellis.pokedex.repo.RepositoryModule
 import me.nickellis.pokedex.repo.cat.CatRepository
+import me.nickellis.pokedex.service.ErrorHandler
 import me.nickellis.pokedex.service.ServiceModule
 import me.nickellis.pokedex.service.cat.CatService
 import me.nickellis.pokedex.ui.MainActivity
+import retrofit2.Response
+import javax.inject.Named
 import javax.inject.Singleton
 
 interface AppComponentProvider {
@@ -25,7 +28,10 @@ interface AppComponent {
   fun appContext(): Context
   //endregion
 
-  //region Services
+  //region Cat Services
+  @Named(ServiceModule.CatErrorConverter)
+  fun catErrorHandler(): ErrorHandler<Response<*>>
+
   fun catService(): CatService
   //endregion
 

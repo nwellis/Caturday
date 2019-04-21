@@ -5,12 +5,11 @@ import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import kotlinx.coroutines.suspendCancellableCoroutine
 import me.nickellis.pokedex.R
-import retrofit2.HttpException
+import me.nickellis.pokedex.service.ErrorHandler
+import okhttp3.ResponseBody
+import retrofit2.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
@@ -89,11 +88,14 @@ interface RepositoryRequest<T> {
 /**
  * Converts the retrofit [Call] into a repository request.
  */
-fun <Body, Model> Call<Body>.asRepositoryRequest(resources: Resources, mapper: (Body) -> Model): RepositoryRequest<Model> {
+fun <Body, Model> Call<Body>.asRepositoryRequest(
+  errorHandler: ErrorHandler<Response<*>>,
+  mapper: (Body) -> Model
+): RepositoryRequest<Model> {
   return RetrofitRequest(
     call = this,
     mapper = mapper,
-    resources = resources
+    errorHandler = errorHandler
   )
 }
 
@@ -107,7 +109,7 @@ private fun <T> Response<T>.toRepositoryError(resources: Resources): RepositoryE
 class RetrofitRequest<Body, Model>(
   private val call: Call<Body>,
   private val mapper: (Body) -> Model,
-  private val resources: Resources
+  private val errorHandler: ErrorHandler<Response<*>>
 ) : RepositoryRequest<Model>, LifecycleObserver {
 
   companion object {
@@ -147,21 +149,30 @@ class RetrofitRequest<Body, Model>(
     call.enqueue(object : Callback<Body> {
       override fun onResponse(call: Call<Body>, response: Response<Body>) {
         if (response.isSuccessful) {
-          callback(SuccessResponse(
-            data = mapper(response.body() ?: throw response.toRepositoryError(resources))
-          ))
+          try {
+            @Suppress("UNCHECKED_CAST")
+            callback(
+              SuccessResponse(
+                data = mapper((response.body() as Body))
+              )
+            )
+          } catch (ex: Exception) {
+            Log.e(TAG, "Failed to parse successful response from API for ${call.request().url()}. Is the model correct?", ex)
+            callback(ErrorResponse(
+              error = errorHandler.handleFailure(ex)
+            ))
+          }
         } else {
           callback(ErrorResponse(
-            error = response.toRepositoryError(resources)
+            error = errorHandler.handle(response)
           ))
         }
       }
 
       override fun onFailure(call: Call<Body>, t: Throwable) {
         if (call.isCanceled) return
-
         callback(ErrorResponse(
-          error = RepositoryError(resources.getString(R.string.error_default), t)
+          error = errorHandler.handleFailure(t)
         ))
       }
     })
