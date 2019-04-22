@@ -6,8 +6,6 @@ import me.nickellis.pokedex.ktx.ensureNonNullId
 import me.nickellis.pokedex.repo.RepositoryRequest
 import me.nickellis.pokedex.repo.asRepositoryRequest
 import me.nickellis.pokedex.service.ErrorHandler
-import me.nickellis.pokedex.service.cat.CatImageSize
-import me.nickellis.pokedex.service.cat.CatImagesQuery
 import me.nickellis.pokedex.service.cat.CatService
 import retrofit2.Response
 
