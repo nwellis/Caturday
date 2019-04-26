@@ -42,6 +42,9 @@ typealias OnCancelledCallback = (succeeded: Boolean) -> Unit
  *   }
  * }
  * ```
+ *
+ * Any await or enqueue call should be only executed **once**. Currently there is no clone method to help with
+ * executing the same request more than once.
  */
 interface RepositoryRequest<T> {
 
@@ -98,7 +101,8 @@ interface RepositoryRequest<T> {
 }
 
 /**
- * Converts the retrofit [Call] into a repository request.
+ * Converts the retrofit [Call] into a [RepositoryRequest].
+ * @see RetrofitRequest
  */
 fun <Body, Model> Call<Body>.asRepositoryRequest(
   errorHandler: ErrorHandler<Response<*>>,
@@ -111,13 +115,18 @@ fun <Body, Model> Call<Body>.asRepositoryRequest(
   )
 }
 
-private fun <T> Response<T>.toRepositoryError(resources: Resources): RepositoryError {
-  return RepositoryError(
-    message = errorBody()?.string() ?: resources.getString(R.string.error_default),
-    cause = HttpException(this)
-  )
-}
-
+/**
+ * Implementation of a [RepositoryRequest] with a Retrofit [Call]. The normal [enqueue] method basically wraps
+ * Retrofit's existing callback. On the other hand [await] uses a [suspendCancellableCoroutine] under the hood.
+ * Invoking [cancel] will cancel the underlying [call].
+ *
+ * @param Body The body returned by the Retrofit call.
+ * @param Model The result of the [RepositoryRequest].
+ * @property call The network call to be use for acquiring the [Body].
+ * @property mapper Upon successful completion this will be invoked in order to map the model.
+ * @property errorHandler Handler to work with network and non-success issues.
+ * @constructor Creates an implementation of [RepositoryRequest] with a Retrofit [Call].
+ */
 class RetrofitRequest<Body, Model>(
   private val call: Call<Body>,
   private val mapper: (Body) -> Model,

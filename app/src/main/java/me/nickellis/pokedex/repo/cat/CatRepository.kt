@@ -9,10 +9,16 @@ import me.nickellis.pokedex.service.ErrorHandler
 import me.nickellis.pokedex.service.cat.CatService
 import retrofit2.Response
 
-
+/**
+ * Repository for querying all cat data.
+ *
+ * @see [Docs](https://docs.thecatapi.com/)
+ */
 interface CatRepository {
   /**
    * Get cat images right meow!
+   * @param query Used to specify criteria and request which page to load.
+   * @return a repository request with the specified page of results.
    */
   fun getCatImages(query: CatImagesQuery): RepositoryRequest<List<CatImage>>
 }
