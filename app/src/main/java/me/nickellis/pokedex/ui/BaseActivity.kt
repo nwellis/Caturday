@@ -11,29 +11,10 @@ import me.nickellis.pokedex.repo.cat.CatRepository
 import me.nickellis.pokedex.repo.cat.CatImagesQuery
 import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
-
-    @Inject lateinit var catRepository: CatRepository
+abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injector.inject(this)
-        setContentView(R.layout.activity_main)
-
-        catRepository.getCatImages(
-          CatImagesQuery(
-            page = 0,
-            pageSize = 25
-          )
-        ).enqueueWith(lifecycle) { response ->
-          when (response) {
-            is SuccessResponse -> {
-              main_text.text = response.data.toString()
-            }
-            is ErrorResponse -> {
-              main_text.text = response.error.message
-            }
-          }
-        }
     }
 }

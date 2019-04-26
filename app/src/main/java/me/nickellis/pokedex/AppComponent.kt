@@ -8,6 +8,7 @@ import me.nickellis.pokedex.repo.cat.CatRepository
 import me.nickellis.pokedex.service.ErrorHandler
 import me.nickellis.pokedex.service.ServiceModule
 import me.nickellis.pokedex.service.cat.CatService
+import me.nickellis.pokedex.ui.BaseActivity
 import me.nickellis.pokedex.ui.MainActivity
 import retrofit2.Response
 import javax.inject.Named
@@ -39,6 +40,7 @@ interface AppComponent {
   fun catRepository(): CatRepository
   //endregion
 
+  fun inject(activity: BaseActivity)
   fun inject(activity: MainActivity)
 
 }
