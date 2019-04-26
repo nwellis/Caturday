@@ -10,6 +10,7 @@ import me.nickellis.pokedex.service.ServiceModule
 import me.nickellis.pokedex.service.cat.CatService
 import me.nickellis.pokedex.ui.BaseActivity
 import me.nickellis.pokedex.ui.MainActivity
+import me.nickellis.pokedex.ui.common.viewmodel.ViewModelModule
 import retrofit2.Response
 import javax.inject.Named
 import javax.inject.Singleton
@@ -21,7 +22,7 @@ val Activity.injector get() = (application as AppComponentProvider).component
 
 @Singleton
 @Component(modules = [
-  AppModule::class, ServiceModule::class, RepositoryModule::class
+  AppModule::class, ServiceModule::class, RepositoryModule::class, ViewModelModule::class
 ])
 interface AppComponent {
 
