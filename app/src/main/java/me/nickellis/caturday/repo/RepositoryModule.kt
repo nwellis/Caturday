@@ -1,12 +1,12 @@
-package me.nickellis.pokedex.repo
+package me.nickellis.caturday.repo
 
 import dagger.Module
 import dagger.Provides
-import me.nickellis.pokedex.repo.cat.ApiCatRepository
-import me.nickellis.pokedex.repo.cat.CatRepository
-import me.nickellis.pokedex.service.ErrorHandler
-import me.nickellis.pokedex.service.ServiceModule
-import me.nickellis.pokedex.service.cat.CatService
+import me.nickellis.caturday.repo.cat.ApiCatRepository
+import me.nickellis.caturday.repo.cat.CatRepository
+import me.nickellis.caturday.service.ErrorHandler
+import me.nickellis.caturday.service.ServiceModule
+import me.nickellis.caturday.service.cat.CatService
 import retrofit2.Response
 import javax.inject.Named
 import javax.inject.Singleton

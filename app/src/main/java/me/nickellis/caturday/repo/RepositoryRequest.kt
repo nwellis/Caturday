@@ -1,4 +1,4 @@
-package me.nickellis.pokedex.repo
+package me.nickellis.caturday.repo
 
 import android.content.res.Resources
 import android.util.Log
@@ -7,9 +7,9 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
-import me.nickellis.pokedex.AppExecutors
-import me.nickellis.pokedex.R
-import me.nickellis.pokedex.service.ErrorHandler
+import me.nickellis.caturday.AppExecutors
+import me.nickellis.caturday.R
+import me.nickellis.caturday.service.ErrorHandler
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException

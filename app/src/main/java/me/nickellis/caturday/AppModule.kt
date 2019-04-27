@@ -1,4 +1,4 @@
-package me.nickellis.pokedex
+package me.nickellis.caturday
 
 import android.content.Context
 import dagger.Module
@@ -7,7 +7,7 @@ import dagger.Reusable
 
 
 @Module
-class AppModule(private val app: PokedexApp) {
+class AppModule(private val app: CaturdayApp) {
 
   @Provides @Reusable
   fun appContext(): Context {

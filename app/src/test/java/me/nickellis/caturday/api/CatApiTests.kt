@@ -1,4 +1,4 @@
-package me.nickellis.pokedex.api
+package me.nickellis.caturday.api
 
 import org.junit.After
 import org.junit.Before

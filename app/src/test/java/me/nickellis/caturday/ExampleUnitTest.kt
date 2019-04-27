@@ -1,4 +1,4 @@
-package me.nickellis.pokedex
+package me.nickellis.caturday
 
 import org.junit.Test
 

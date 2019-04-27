@@ -1,4 +1,4 @@
-package me.nickellis.pokedex.ktx
+package me.nickellis.caturday.ktx
 
 import android.util.Log
 import java.util.*

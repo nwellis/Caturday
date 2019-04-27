@@ -1,12 +1,12 @@
-package me.nickellis.pokedex.repo.cat
+package me.nickellis.caturday.repo.cat
 
 
-import me.nickellis.pokedex.domain.CatImage
-import me.nickellis.pokedex.ktx.ensureNonNullId
-import me.nickellis.pokedex.repo.RepositoryRequest
-import me.nickellis.pokedex.repo.asRepositoryRequest
-import me.nickellis.pokedex.service.ErrorHandler
-import me.nickellis.pokedex.service.cat.CatService
+import me.nickellis.caturday.domain.CatImage
+import me.nickellis.caturday.ktx.ensureNonNullId
+import me.nickellis.caturday.repo.RepositoryRequest
+import me.nickellis.caturday.repo.asRepositoryRequest
+import me.nickellis.caturday.service.ErrorHandler
+import me.nickellis.caturday.service.cat.CatService
 import retrofit2.Response
 
 

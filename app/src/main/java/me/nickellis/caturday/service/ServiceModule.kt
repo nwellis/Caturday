@@ -1,4 +1,4 @@
-package me.nickellis.pokedex.service
+package me.nickellis.caturday.service
 
 import android.content.Context
 import com.google.gson.Gson
@@ -6,9 +6,9 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
-import me.nickellis.pokedex.BuildConfig
-import me.nickellis.pokedex.service.cat.CatApiError
-import me.nickellis.pokedex.service.cat.CatService
+import me.nickellis.caturday.BuildConfig
+import me.nickellis.caturday.service.cat.CatApiError
+import me.nickellis.caturday.service.cat.CatService
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit

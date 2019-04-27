@@ -1,14 +1,14 @@
-package me.nickellis.pokedex
+package me.nickellis.caturday
 
 import android.app.Activity
 import android.content.Context
 import dagger.Component
-import me.nickellis.pokedex.repo.RepositoryModule
-import me.nickellis.pokedex.repo.cat.CatRepository
-import me.nickellis.pokedex.service.ErrorHandler
-import me.nickellis.pokedex.service.ServiceModule
-import me.nickellis.pokedex.service.cat.CatService
-import me.nickellis.pokedex.ui.MainActivity
+import me.nickellis.caturday.repo.RepositoryModule
+import me.nickellis.caturday.repo.cat.CatRepository
+import me.nickellis.caturday.service.ErrorHandler
+import me.nickellis.caturday.service.ServiceModule
+import me.nickellis.caturday.service.cat.CatService
+import me.nickellis.caturday.ui.MainActivity
 import retrofit2.Response
 import javax.inject.Named
 import javax.inject.Singleton

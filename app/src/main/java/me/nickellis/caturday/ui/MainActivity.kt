@@ -1,14 +1,14 @@
-package me.nickellis.pokedex.ui
+package me.nickellis.caturday.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import me.nickellis.pokedex.R
-import me.nickellis.pokedex.injector
-import me.nickellis.pokedex.repo.ErrorResponse
-import me.nickellis.pokedex.repo.SuccessResponse
-import me.nickellis.pokedex.repo.cat.CatRepository
-import me.nickellis.pokedex.repo.cat.CatImagesQuery
+import me.nickellis.caturday.R
+import me.nickellis.caturday.injector
+import me.nickellis.caturday.repo.ErrorResponse
+import me.nickellis.caturday.repo.SuccessResponse
+import me.nickellis.caturday.repo.cat.CatRepository
+import me.nickellis.caturday.repo.cat.CatImagesQuery
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {

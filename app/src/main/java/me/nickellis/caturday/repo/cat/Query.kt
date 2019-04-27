@@ -1,4 +1,4 @@
-package me.nickellis.pokedex.repo.cat
+package me.nickellis.caturday.repo.cat
 
 
 data class CatImagesQuery(

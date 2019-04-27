@@ -1,6 +1,6 @@
-package me.nickellis.pokedex.service
+package me.nickellis.caturday.service
 
-import me.nickellis.pokedex.BuildConfig
+import me.nickellis.caturday.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 

@@ -1,4 +1,4 @@
-package me.nickellis.pokedex
+package me.nickellis.caturday
 
 import android.os.Handler
 import android.os.Looper
@@ -8,7 +8,6 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
-import kotlin.coroutines.CoroutineContext
 
 /**
  * Global instance for executors in the application. This should be favored instead of creating your own thread

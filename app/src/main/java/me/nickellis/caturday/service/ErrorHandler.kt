@@ -1,9 +1,9 @@
-package me.nickellis.pokedex.service
+package me.nickellis.caturday.service
 
 import android.content.res.Resources
-import me.nickellis.pokedex.R
-import me.nickellis.pokedex.repo.RepositoryError
-import me.nickellis.pokedex.service.cat.CatApiError
+import me.nickellis.caturday.R
+import me.nickellis.caturday.repo.RepositoryError
+import me.nickellis.caturday.service.cat.CatApiError
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.HttpException

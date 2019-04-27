@@ -1,4 +1,4 @@
-package me.nickellis.pokedex.service.cat
+package me.nickellis.caturday.service.cat
 
 import retrofit2.Call
 import retrofit2.http.GET

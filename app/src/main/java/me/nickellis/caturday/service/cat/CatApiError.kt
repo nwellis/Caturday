@@ -1,4 +1,4 @@
-package me.nickellis.pokedex.service.cat
+package me.nickellis.caturday.service.cat
 
 /**
  * Error body returned by the cat api on error. For example:

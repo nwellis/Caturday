@@ -1,9 +1,9 @@
-package me.nickellis.pokedex
+package me.nickellis.caturday
 
 import android.app.Application
 
 
-class PokedexApp : Application(), AppComponentProvider {
+class CaturdayApp : Application(), AppComponentProvider {
 
   override val component: AppComponent = DaggerAppComponent.builder()
     .appModule(AppModule(this))
