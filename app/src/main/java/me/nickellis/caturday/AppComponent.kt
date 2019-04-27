@@ -22,19 +22,12 @@ val Activity.injector get() = (application as AppComponentProvider).component
 
 @Singleton
 @Component(modules = [
-  AppModule::class, ServiceModule::class, RepositoryModule::class, ViewModelModule::class
+  AppModule::class, RepositoryModule::class, ViewModelModule::class
 ])
 interface AppComponent {
 
   //region Android
   fun appContext(): Context
-  //endregion
-
-  //region Cat Services
-  @Named(ServiceModule.CatErrorConverter)
-  fun catErrorHandler(): ErrorHandler<Response<*>>
-
-  fun catService(): CatService
   //endregion
 
   //region Repositories

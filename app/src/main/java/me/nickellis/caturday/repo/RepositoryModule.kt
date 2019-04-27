@@ -12,7 +12,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 
-@Module
+@Module(includes = [ServiceModule::class])
 class RepositoryModule {
 
   @Singleton @Provides
