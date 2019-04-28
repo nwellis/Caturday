@@ -2,8 +2,8 @@ package me.nickellis.caturday.repo.cat
 
 
 data class CatImagesQuery(
-  val imageSize: CatImageSize = CatImageSize.Medium,
-  val page: Int,
+  val imageSize: CatImageSize = CatImageSize.Small,
+  val page: Int = 0,
   val pageSize: Int
 )
 
