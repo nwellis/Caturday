@@ -5,6 +5,11 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 private const val Prefix = "/v1"
+
+/**
+ * Service for the cat [API](https://docs.thecatapi.com/api-reference). The cat API is the one stop shop for all
+ * your cat needs. Check out its exposed functionality below.
+ */
 interface CatService {
 
   /**
