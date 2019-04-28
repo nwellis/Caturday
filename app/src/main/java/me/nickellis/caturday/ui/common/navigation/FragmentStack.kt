@@ -1,7 +1,9 @@
 package me.nickellis.caturday.ui.common.navigation
 
+import android.os.Bundle
 import android.util.Log
 import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -12,21 +14,27 @@ import androidx.fragment.app.FragmentTransaction
  *
  * The stack is kept track of by the tags assigned to each fragment. When an actual reference to an actual
  * fragment is needed, the tag is used to get it from the [FragmentManager].
+ *
+ * @param manager Fragment manager to wrap from [AppCompatActivity.getSupportFragmentManager]
+ * @param containerViewId Layout ID of the container for the stack
+ * @param inState to resume the state of the fragment stack
  */
 class FragmentStack(
   private val manager: FragmentManager,
-  @param:IdRes private val containerViewId: Int
+  @param:IdRes private val containerViewId: Int,
+  inState: Bundle
 ) {
-  
+
   companion object {
-    private const val TAG_PATTERN_PREFIX = "frag_stack_"
+    const val TAG_PATTERN_PREFIX = "frag_stack_"
+    const val BUNDLE_KEY = "frag_stack_tags"
     const val TAG = "FragmentStack"
   }
 
   /**
    * By only maintaining the tags, we can save them in a bundle and restore the fragments.
    */
-  private val fragmentTagStack = mutableListOf<String>()
+  private val fragmentTagStack: MutableList<String>
 
   /**
    * Checks the stack to see if its empty
@@ -41,6 +49,25 @@ class FragmentStack(
    */
   val size: Int
     get() = fragmentTagStack.size
+
+  /**
+   * Resume the previous tag array and ensure it is sorted correctly.
+   */
+  init {
+    fragmentTagStack = inState?.getStringArray(BUNDLE_KEY)
+      ?.sortedBy { tag -> tag.removePrefix(TAG_PATTERN_PREFIX).toIntOrNull() }
+      ?.toMutableList()
+      ?: mutableListOf()
+  }
+
+  /**
+   * In order for the fragment stack to resume it's previous state you must save it here on
+   * [AppCompatActivity.onSaveInstanceState]. When the stack is recreated it will use the bundle to resume
+   * the stack automatically.
+   */
+  fun save(outState: Bundle) {
+    outState.putStringArray(BUNDLE_KEY, fragmentTagStack.toTypedArray())
+  }
 
   /**
    * Push a fragment on the stack

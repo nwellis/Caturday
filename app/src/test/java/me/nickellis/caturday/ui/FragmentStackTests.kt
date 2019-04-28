@@ -1,5 +1,6 @@
 package me.nickellis.caturday.ui
 
+import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -11,18 +12,18 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.*
+import org.mockito.internal.util.reflection.FieldSetter
 import org.mockito.junit.MockitoJUnitRunner
 
-/**
- * TODO: Isn't very "unit testy" as I'm performing ops to begin initial state. Change once resume state is implemented
- */
 @RunWith(MockitoJUnitRunner::class)
 class FragmentStackTests {
 
   @IdRes private val containerId: Int = 10000
   @Mock private lateinit var mockFragmentManager: FragmentManager
   @Mock private lateinit var mockTransaction: FragmentTransaction
+  @Mock private lateinit var mockBundle: Bundle
 
   private fun newMockFragment(): Fragment {
     return mock(Fragment::class.java)
@@ -32,7 +33,7 @@ class FragmentStackTests {
 
   @Before
   fun setUp() {
-    fragmentStack = FragmentStack(mockFragmentManager, containerId)
+    fragmentStack = FragmentStack(mockFragmentManager, containerId, mockBundle)
 
     `when`(mockFragmentManager.beginTransaction())
       .thenReturn(mockTransaction)
@@ -43,7 +44,6 @@ class FragmentStackTests {
 
   @After
   fun tearDown() {
-
   }
 
   @Test
@@ -71,43 +71,18 @@ class FragmentStackTests {
     // Arrange
     val existingFragment = newMockFragment()
     val newFragment = newMockFragment()
-
-    // If the fragment stack is non empty, it will find an existing fragment
-    `when`(mockFragmentManager.findFragmentByTag(anyString()))
-      .thenReturn(existingFragment)
-
-    fragmentStack.push(existingFragment)
+    fragmentStack.setInitialFragments(existingFragment)
 
     // Act
     fragmentStack.push(newFragment)
 
     // Assert
-    verifyBeginTransactionWithCommit(2)
+    verifyBeginTransactionWithCommit(1)
 
     verify(mockTransaction, times(1))
       .detach(existingFragment)
-    verify(mockTransaction, times(2))
-      .add(anyInt(), any(Fragment::class.java), anyString())
-  }
-
-  @Test
-  fun `pop on non-empty fragment stack`() {
-    // Arrange
-    val fragment = newMockFragment()
-    fragmentStack.push(fragment)
-
-    // If the fragment stack is non empty, it will find an existing fragment
-    `when`(mockFragmentManager.findFragmentByTag(anyString()))
-      .thenReturn(fragment)
-
-    // Act
-    fragmentStack.pop()
-
-    // Assert
-    verifyBeginTransactionWithCommit(2)
-
     verify(mockTransaction, times(1))
-      .remove(fragment)
+      .add(anyInt(), any(Fragment::class.java), anyString())
   }
 
   @Test
@@ -125,33 +100,34 @@ class FragmentStackTests {
   }
 
   @Test
+  fun `pop on non-empty fragment stack`() {
+    // Arrange
+    val fragment = newMockFragment()
+    fragmentStack.setInitialFragments(fragment)
+
+    // Act
+    fragmentStack.pop()
+
+    // Assert
+    verifyBeginTransactionWithCommit(1)
+
+    verify(mockTransaction, times(1))
+      .remove(fragment)
+  }
+
+  @Test
   fun `clear on non-empty fragment stack`() {
     // Arrange
     val fragment1 = newMockFragment()
     val fragment2 = newMockFragment()
     val fragment3 = newMockFragment()
-
-    // If the fragment stack is non empty, it will find an existing fragment
-    `when`(mockFragmentManager.findFragmentByTag(anyString()))
-      .thenReturn(null)
-      .thenReturn(fragment1)
-      .thenReturn(fragment2)
-      .thenReturn(fragment3)
-      .thenReturn(fragment1)
-      .thenReturn(fragment2)
-      .thenReturn(fragment3)
-
-    fragmentStack.apply {
-      push(fragment1)
-      push(fragment2)
-      push(fragment3)
-    }
+    fragmentStack.setInitialFragments(fragment1, fragment2, fragment3)
 
     // Act
     fragmentStack.clear()
 
     // Assert
-    verifyBeginTransactionWithCommit(4)
+    verifyBeginTransactionWithCommit(1)
 
     verify(mockTransaction, times(1))
       .remove(fragment1)
@@ -186,5 +162,19 @@ class FragmentStackTests {
       .beginTransaction()
     verify(mockTransaction, times(wantedNumberOfInvocations))
       .commit()
+  }
+
+  private fun FragmentStack.setInitialFragments(vararg fragments: Fragment) {
+    val fragmentsWithTag = fragments.mapIndexed { index, fragment ->
+      Pair(fragment, FragmentStack.TAG_PATTERN_PREFIX + index)
+    }
+
+    FieldSetter.setField(this, javaClass.getDeclaredField("fragmentTagStack"),
+      fragmentsWithTag.map { (_, tag) -> tag }.toMutableList())
+
+    fragmentsWithTag.forEach { (fragment, tag) ->
+      `when`(mockFragmentManager.findFragmentByTag(tag))
+        .thenReturn(fragment)
+    }
   }
 }
