@@ -22,7 +22,7 @@ import androidx.fragment.app.FragmentTransaction
 class FragmentStack(
   private val manager: FragmentManager,
   @param:IdRes private val containerViewId: Int,
-  inState: Bundle
+  inState: Bundle?
 ) {
 
   companion object {
@@ -65,8 +65,8 @@ class FragmentStack(
    * [AppCompatActivity.onSaveInstanceState]. When the stack is recreated it will use the bundle to resume
    * the stack automatically.
    */
-  fun save(outState: Bundle) {
-    outState.putStringArray(BUNDLE_KEY, fragmentTagStack.toTypedArray())
+  fun save(outState: Bundle?) {
+    outState?.putStringArray(BUNDLE_KEY, fragmentTagStack.toTypedArray())
   }
 
   /**
