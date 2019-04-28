@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- check out the palette @ https://coolors.co/f5eff0-242038-b14aed-c874d9-913dc2 -->
 <resources>
     <color name="colorPrimary">#B14AED</color>
     <color name="colorPrimaryDark">#913DC2</color>
