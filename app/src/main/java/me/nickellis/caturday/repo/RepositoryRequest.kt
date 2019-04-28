@@ -9,6 +9,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import me.nickellis.caturday.AppExecutors
 import me.nickellis.caturday.R
+import me.nickellis.caturday.data.common.AppError
 import me.nickellis.caturday.service.ErrorHandler
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,9 +24,7 @@ import kotlin.coroutines.resumeWithException
  */
 sealed class RepositoryResponse<T>
 class SuccessResponse<T>(val data: T): RepositoryResponse<T>()
-class ErrorResponse<T>(val error: RepositoryError): RepositoryResponse<T>()
-
-class RepositoryError(override val message: String, override val cause: Throwable? = null): Throwable(message, cause)
+class ErrorResponse<T>(val error: AppError): RepositoryResponse<T>()
 
 typealias RepositoryCallback<T> = (response: RepositoryResponse<T>) -> Unit
 typealias OnCancelledCallback = (succeeded: Boolean) -> Unit

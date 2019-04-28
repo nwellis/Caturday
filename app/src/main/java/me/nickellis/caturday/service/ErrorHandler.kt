@@ -2,19 +2,36 @@ package me.nickellis.caturday.service
 
 import android.content.res.Resources
 import me.nickellis.caturday.R
-import me.nickellis.caturday.repo.RepositoryError
+import me.nickellis.caturday.data.common.AppError
 import me.nickellis.caturday.service.cat.CatApiError
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.HttpException
 import retrofit2.Response
 
-
+/**
+ * Error handling contract for all services. Each service could possibly have a different error body
+ * that needs to be handled.
+ */
 interface ErrorHandler<T> {
-  val defaultError: RepositoryError
+  /**
+   * Default error that represents an unknown or unidentified error.
+   */
+  val defaultError: AppError
 
-  fun handle(error: T): RepositoryError
-  fun handleFailure(t: Throwable): RepositoryError
+  /**
+   * Given an error, convert it to the applications global error.
+   * @param error error that should be interpreted
+   * @return Universal app error
+   */
+  fun handle(error: T): AppError
+
+  /**
+   * Given a throwable, convert it to the applications global error.
+   * @param t throwable that should be interpreted
+   * @return Universal app error
+   */
+  fun handleFailure(t: Throwable): AppError
 }
 
 class CatApiErrorHandler(
@@ -22,21 +39,21 @@ class CatApiErrorHandler(
   private val errorConverter: Converter<ResponseBody, CatApiError>
 ): ErrorHandler<Response<*>> {
 
-  override val defaultError: RepositoryError = RepositoryError(
+  override val defaultError: AppError = AppError(
     message = resources.getString(R.string.error_default),
     cause = null
   )
 
-  override fun handle(error: Response<*>): RepositoryError {
+  override fun handle(error: Response<*>): AppError {
     val errorBody = error.errorBody()
 
     return errorBody
       ?.let { errorConverter.convert(it) }
-      ?.let { RepositoryError(message = it.message, cause = HttpException(error)) }
-      ?: RepositoryError(message = resources.getString(R.string.error_default), cause = HttpException(error))
+      ?.let { AppError(message = it.message, cause = HttpException(error)) }
+      ?: AppError(message = resources.getString(R.string.error_default), cause = HttpException(error))
   }
 
-  override fun handleFailure(t: Throwable): RepositoryError {
-    return RepositoryError(resources.getString(R.string.error_default), t)
+  override fun handleFailure(t: Throwable): AppError {
+    return AppError(resources.getString(R.string.error_default), t)
   }
 }
