@@ -1,7 +1,7 @@
 package me.nickellis.caturday.repo.cat
 
 
-import me.nickellis.caturday.data.CatImage
+import me.nickellis.caturday.domain.CatImage
 import me.nickellis.caturday.ktx.ensureNonNullId
 import me.nickellis.caturday.repo.RepositoryRequest
 import me.nickellis.caturday.repo.asRepositoryRequest

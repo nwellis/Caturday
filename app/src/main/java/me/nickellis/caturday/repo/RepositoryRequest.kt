@@ -1,6 +1,5 @@
 package me.nickellis.caturday.repo
 
-import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -8,12 +7,10 @@ import androidx.lifecycle.OnLifecycleEvent
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import me.nickellis.caturday.AppExecutors
-import me.nickellis.caturday.R
-import me.nickellis.caturday.data.common.AppError
+import me.nickellis.caturday.domain.common.AppError
 import me.nickellis.caturday.service.ErrorHandler
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.HttpException
 import retrofit2.Response
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException

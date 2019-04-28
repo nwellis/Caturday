@@ -1,6 +1,6 @@
 package me.nickellis.caturday.ui.common.state
 
-import me.nickellis.caturday.data.common.AppError
+import me.nickellis.caturday.domain.common.AppError
 
 
 sealed class NetworkState {

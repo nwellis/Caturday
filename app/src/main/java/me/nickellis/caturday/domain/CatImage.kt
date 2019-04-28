@@ -1,4 +1,4 @@
-package me.nickellis.caturday.data
+package me.nickellis.caturday.domain
 
 data class CatImage(
   val id: String,

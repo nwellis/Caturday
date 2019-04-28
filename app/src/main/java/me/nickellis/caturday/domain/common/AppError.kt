@@ -1,4 +1,4 @@
-package me.nickellis.caturday.data.common
+package me.nickellis.caturday.domain.common
 
 /**
  * Global

@@ -2,7 +2,7 @@ package me.nickellis.caturday.service
 
 import android.content.res.Resources
 import me.nickellis.caturday.R
-import me.nickellis.caturday.data.common.AppError
+import me.nickellis.caturday.domain.common.AppError
 import me.nickellis.caturday.service.cat.CatApiError
 import okhttp3.ResponseBody
 import retrofit2.Converter
