@@ -17,15 +17,22 @@ class CatImagesDataFactory(
   private val repository: CatRepository
 ): DataSource.Factory<CatImagesQuery, CatImage>() {
 
+  val executor: Executor = AppExecutors.networkIO
+
   private var query: CatImagesQuery = CatImagesQuery(page = 0, pageSize = 10)
 
   val mutableLiveData: MutableLiveData<CatImagesDataSource> = MutableLiveData()
   private val source: CatImagesDataSource? = mutableLiveData.value
 
   override fun create(): DataSource<CatImagesQuery, CatImage> {
-    return CatImagesDataSource(repository, query, AppExecutors.networkIO).apply {
+    return CatImagesDataSource(repository, query, executor).apply {
       mutableLiveData.postValue(this)
     }
+  }
+
+  fun setQuery(query: CatImagesQuery) {
+    this.query = query
+    source?.invalidate()
   }
 
   fun retryFailedCall() = source?.retryFailedCall()
