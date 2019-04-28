@@ -1,7 +1,7 @@
 package me.nickellis.caturday.domain.common
 
 /**
- * Global
+ * Universal error to be used within the application.
  *
  * @param message A human readable message intended for users
  * @param cause Optional cause of the issue
