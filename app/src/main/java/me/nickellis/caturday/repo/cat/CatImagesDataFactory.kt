@@ -14,10 +14,9 @@ import java.util.concurrent.Executor
 
 
 class CatImagesDataFactory(
-  private val repository: CatRepository
+  private val repository: CatRepository,
+  private val executor: Executor
 ): DataSource.Factory<CatImagesQuery, CatImage>() {
-
-  val executor: Executor = AppExecutors.networkIO
 
   private var query: CatImagesQuery = CatImagesQuery(page = 0, pageSize = 10)
 

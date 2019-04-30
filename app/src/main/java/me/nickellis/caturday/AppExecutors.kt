@@ -8,6 +8,8 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Global instance for executors in the application. This should be favored instead of creating your own thread
@@ -15,11 +17,20 @@ import java.util.concurrent.Executors
  *
  * @see [Example](https://github.com/googlesamples/android-architecture-components)
  */
-object AppExecutors {
+@Suppress("CanBeParameter", "unused")
+@Singleton
+open class AppExecutors(
+  val diskIO: Executor,
+  val networkIO: Executor,
+  val mainThread: Executor
+) {
 
-  val diskIO: Executor = Executors.newSingleThreadExecutor()
-  val networkIO: Executor = Executors.newFixedThreadPool(3)
-  val mainThread: Executor = MainThreadExecutor()
+  @Inject
+  constructor() : this(
+    Executors.newSingleThreadExecutor(),
+    Executors.newFixedThreadPool(3),
+    MainThreadExecutor()
+  )
 
   val ioDispatcher = networkIO.asCoroutineDispatcher()
   val mainDispatcher = Dispatchers.Main
@@ -30,12 +41,4 @@ object AppExecutors {
       mainThreadHandler.post(command)
     }
   }
-
 }
-
-/**
- *
- */
-suspend fun <T> withIOContext(
-  block: suspend CoroutineScope.() -> T
-): T = withContext(context = AppExecutors.ioDispatcher, block = block)

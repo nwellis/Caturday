@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import me.nickellis.caturday.AppExecutors
 import me.nickellis.caturday.domain.CatImage
 import me.nickellis.caturday.repo.cat.CatImagesDataFactory
 import me.nickellis.caturday.repo.cat.CatImagesQuery
@@ -15,10 +18,11 @@ import javax.inject.Inject
 
 
 class SearchCatsViewModel @Inject constructor(
-  catRepository: CatRepository
-): BaseViewModel() {
+  catRepository: CatRepository,
+  appExecutors: AppExecutors
+): BaseViewModel(appExecutors) {
 
-  private val factory: CatImagesDataFactory = CatImagesDataFactory(catRepository)
+  private val factory: CatImagesDataFactory = CatImagesDataFactory(catRepository, appExecutors.networkIO)
 
   val catImages: LiveData<PagedList<CatImage>>
   val networkState: LiveData<DataSourceState>
@@ -31,7 +35,7 @@ class SearchCatsViewModel @Inject constructor(
 
   init {
     catImages = LivePagedListBuilder(factory, config)
-      .setFetchExecutor(factory.executor)
+      .setFetchExecutor(appExecutors.networkIO)
       .build()
 
     networkState = Transformations
@@ -39,6 +43,7 @@ class SearchCatsViewModel @Inject constructor(
   }
 
   fun setQuery(query: CatImagesQuery): SearchCatsViewModel {
+    launch { delay(100) }
     factory.setQuery(query)
     return this
   }

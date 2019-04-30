@@ -1,4 +1,4 @@
-package me.nickellis.caturday.ui
+package me.nickellis.caturday.ui.common
 
 import android.os.Bundle
 import androidx.annotation.IdRes
@@ -12,7 +12,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.mockito.internal.util.reflection.FieldSetter
 import org.mockito.junit.MockitoJUnitRunner

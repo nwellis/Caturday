@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import me.nickellis.caturday.AppExecutors
@@ -49,14 +50,6 @@ interface RepositoryRequest<T> {
    * whether the request was completed successfully or not.
    */
   suspend fun await(): T
-
-  /**
-   * Awaits for the result with the applications global IO dispatcher. On completion a [RepositoryResponse] is returned
-   * indicating whether the request was completed successfully or not.
-   *
-   * @see [AppExecutors.ioDispatcher]
-   */
-  suspend fun awaitWithIO(): T = withContext(AppExecutors.ioDispatcher) { await() }
 
   /**
    * Asynchronously sends the repository request. On completion a [RepositoryResponse] is returned indicating

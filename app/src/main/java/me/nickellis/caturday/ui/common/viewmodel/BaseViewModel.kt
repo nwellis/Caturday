@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import me.nickellis.caturday.AppExecutors
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -17,7 +18,7 @@ import kotlin.coroutines.CoroutineContext
  *
  * @constructor Constructs the base implementation of a view model.
  */
-abstract class BaseViewModel: ViewModel(), CoroutineScope {
+abstract class BaseViewModel(private val appExecutors: AppExecutors): ViewModel(), CoroutineScope {
 
   companion object {
     const val TAG = "BaseViewModel"
@@ -30,7 +31,7 @@ abstract class BaseViewModel: ViewModel(), CoroutineScope {
 
   private val job = SupervisorJob()
   override val coroutineContext: CoroutineContext
-    get() = Dispatchers.Main + job + uncaughtExceptionHandler
+    get() = appExecutors.mainDispatcher + job + uncaughtExceptionHandler
 
   override fun onCleared() {
     job.cancel()
