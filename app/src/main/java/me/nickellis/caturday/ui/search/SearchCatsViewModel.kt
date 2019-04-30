@@ -43,7 +43,6 @@ class SearchCatsViewModel @Inject constructor(
   }
 
   fun setQuery(query: CatImagesQuery): SearchCatsViewModel {
-    launch { delay(100) }
     factory.setQuery(query)
     return this
   }

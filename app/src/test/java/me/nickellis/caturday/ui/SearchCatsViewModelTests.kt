@@ -11,6 +11,7 @@ import me.nickellis.caturday.ktx.mock
 import me.nickellis.caturday.ktx.wrapWithMockRequest
 import me.nickellis.caturday.repo.cat.CatImagesQuery
 import me.nickellis.caturday.repo.cat.CatRepository
+import me.nickellis.caturday.ui.common.state.DataSourceState
 import me.nickellis.caturday.ui.search.SearchCatsViewModel
 import org.junit.Before
 import org.junit.Rule
@@ -53,20 +54,20 @@ class SearchCatsViewModelTests {
   @Test
   fun `search for images`() {
     // Arrange
-    val mockObserver = mock<Observer<PagedList<CatImage>>>()
     val query = CatImagesQuery(pageSize = pageSize)
 
-    viewModel.catImages.observeForever(mockObserver)
+    val imagesObserver = mock<Observer<PagedList<CatImage>>>()
+    val networkObserver = mock<Observer<DataSourceState>>()
 
-    // Act
-    //verifyNoMoreInteractions(mockObserver)
-    runBlocking {
-      viewModel.setQuery(query)
+    viewModel.apply {
+      catImages.observeForever(imagesObserver)
+      networkState.observeForever(networkObserver)
     }
-    //viewModel.setQuery(query)
+    // Act
+    viewModel.setQuery(query)
 
     // Assert
-
+    verify(mockCatRepository).getCatImages(anyKClass())
   }
 
   suspend fun foo() {
