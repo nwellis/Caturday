@@ -31,4 +31,22 @@ interface CatService {
     @Query("limit") limit: Int,
     @Query("format") format: String = "json"
   ): Call<List<ApiCatImage>>
+
+  /**
+   * Gets all the cat breeds (paginated)
+   *
+   * @param attachBreed 1 for true, else 0 for false
+   * @param page page location, starting at 0
+   * @param limit min 1, max 100
+   *
+   * @return get all your cat breed facts right here
+   *
+   * @see [Doc](https://docs.thecatapi.com/api-reference/breeds/breeds-list)
+   */
+  @GET("$Prefix/breeds")
+  fun getCatBreeds(
+    @Query("attach_breed") attachBreed: Int = 0,
+    @Query("page") page: Int,
+    @Query("limit") limit: Int
+  ): Call<List<ApiCatBreed>>
 }

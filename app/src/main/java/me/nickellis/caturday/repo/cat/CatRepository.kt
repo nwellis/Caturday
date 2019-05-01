@@ -1,6 +1,7 @@
 package me.nickellis.caturday.repo.cat
 
 
+import me.nickellis.caturday.domain.CatBreed
 import me.nickellis.caturday.domain.CatImage
 import me.nickellis.caturday.ktx.ensureNonNullId
 import me.nickellis.caturday.repo.RepositoryRequest
@@ -21,6 +22,12 @@ interface CatRepository {
    * @return a repository request with the specified page of results.
    */
   fun getCatImages(query: CatImagesQuery): RepositoryRequest<List<CatImage>>
+
+  /**
+   * Need some cat facts? Use this to get some info on each cat breed.
+   * @param query Used to specify criteria and request which page to load.
+   */
+  fun getCatBreeds(query: CatBreedsQuery): RepositoryRequest<List<CatBreed>>
 }
 
 class ApiCatRepository(
@@ -43,14 +50,16 @@ class ApiCatRepository(
       .searchCatImages(size = size, page = query.page, limit = pageSize)
       .asRepositoryRequest(
         errorHandler = errorHandler,
-        mapper = { apiCatImages ->
-          apiCatImages.map { apiCatImage ->
-            CatImage(
-              id = apiCatImage.id.ensureNonNullId("Found null ID from cat API get images"),
-              url = apiCatImage.url
-            )
-          }
-        }
+        mapper = { apiCatImages -> apiCatImages.map { it.toCatImage() } }
+      )
+  }
+
+  override fun getCatBreeds(query: CatBreedsQuery): RepositoryRequest<List<CatBreed>> {
+    return catService
+      .getCatBreeds(1, page = query.page, limit = query.pageSize)
+      .asRepositoryRequest(
+        errorHandler = errorHandler,
+        mapper = { apiCatBreeds -> apiCatBreeds.map { it.toCatBreed() } }
       )
   }
 }
