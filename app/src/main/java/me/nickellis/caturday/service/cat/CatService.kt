@@ -25,7 +25,7 @@ interface CatService {
    * @see [Doc](https://docs.thecatapi.com/api-reference/images/images-search)
    */
   @GET("$Prefix/images/search")
-  fun searchCatImages(
+  fun getRandomCatImages(
     @Query("size") size: String,
     @Query("page") page: Int,
     @Query("limit") limit: Int,

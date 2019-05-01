@@ -4,9 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import me.nickellis.caturday.AppExecutors
 import me.nickellis.caturday.domain.CatImage
 import me.nickellis.caturday.domain.common.AppError
 import me.nickellis.caturday.repo.RepositoryRequest
@@ -49,7 +47,6 @@ class CatImagesDataSource(
   private var inflightRequest: RepositoryRequest<List<CatImage>>? = null
 
   val networkState = MutableLiveData<DataSourceState>()
-  var initialLoadSize = 0
 
   fun retryFailedCall() {
     retry
@@ -62,16 +59,16 @@ class CatImagesDataSource(
     callback: LoadInitialCallback<CatImagesQuery, CatImage>
   ) {
     networkState.postValue(DataSourceState.LoadInitial)
-    initialLoadSize = params.requestedLoadSize
 
     try {
       val key = query.copy(page = 0, pageSize = params.requestedLoadSize)
 
       val catImages = runBlocking {
-        repository.getCatImages(key).also { inflightRequest = it }.await()
+        repository.getRandomCatImages(key).also { inflightRequest = it }.await()
       }
 
-      callback.onResult(catImages, null, query.copy(page = query.page + 1))
+      // the query page is always the same b/c we're getting random cat images
+      callback.onResult(catImages, null, key)
       networkState.postValue(DataSourceState.Success)
 
     } catch (ex: CancellationException) {
@@ -86,17 +83,16 @@ class CatImagesDataSource(
 
   override fun loadAfter(params: LoadParams<CatImagesQuery>, callback: LoadCallback<CatImagesQuery, CatImage>) {
     networkState.postValue(DataSourceState.LoadAfter)
-    initialLoadSize = params.requestedLoadSize
 
     try {
-      // TODO: I know that the initialLoadSize != requestedLoadSize, so that will mess up this pagination. Fix!
-      val key = query.copy(page = 0, pageSize = params.requestedLoadSize)
+      // the query page is always the same b/c we're getting random cat images
+      val key = params.key.copy(pageSize = params.requestedLoadSize)
 
       val catImages = runBlocking {
-        repository.getCatImages(key).also { inflightRequest = it }.await()
+        repository.getRandomCatImages(key).also { inflightRequest = it }.await()
       }
 
-      callback.onResult(catImages, query.copy(page = query.page + 1))
+      callback.onResult(catImages, key)
       networkState.postValue(DataSourceState.Success)
 
     } catch (ex: CancellationException) {

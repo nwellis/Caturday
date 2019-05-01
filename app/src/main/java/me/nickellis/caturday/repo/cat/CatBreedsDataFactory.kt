@@ -69,7 +69,7 @@ class CatBreedsDataSource(
         repository.getCatBreeds(key).also { inflightRequest = it }.await()
       }
 
-      callback.onResult(catBreeds, null, query.copy(page = query.page + 1))
+      callback.onResult(catBreeds, null, key.next())
       networkState.postValue(DataSourceState.Success)
 
     } catch (ex: CancellationException) {
@@ -87,14 +87,25 @@ class CatBreedsDataSource(
     initialLoadSize = params.requestedLoadSize
 
     try {
-      // TODO: I know that the initialLoadSize != requestedLoadSize, so that will mess up this pagination. Fix!
-      val key = query.copy(page = 0, pageSize = params.requestedLoadSize)
+      /**
+       * The initial load size will probably be different than the after ones. So in the second pagination request
+       * I'll have to fix this. The default is 3X the normal page size.
+       *
+       * Assumptions:
+       *  1. initial load size is greater than the page size (If it's not that defeats its purpose)
+       *  2. initial load size is multiple of page size
+       */
+      val key = if (params.requestedLoadSize < params.key.pageSize) {
+        params.key.copy(page = params.key.pageSize/params.requestedLoadSize, pageSize = params.requestedLoadSize)
+      } else {
+        params.key
+      }
 
       val catBreeds = runBlocking {
         repository.getCatBreeds(key).also { inflightRequest = it }.await()
       }
 
-      callback.onResult(catBreeds, query.copy(page = query.page + 1))
+      callback.onResult(catBreeds, key.next())
       networkState.postValue(DataSourceState.Success)
 
     } catch (ex: CancellationException) {

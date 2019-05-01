@@ -27,8 +27,7 @@ class CatBreedsViewModel @Inject constructor(
 
   private val config = PagedList.Config.Builder()
     .setEnablePlaceholders(false)
-    .setInitialLoadSizeHint(50)
-    .setPageSize(50)
+    .setPageSize(20)
     .build()
 
   init {

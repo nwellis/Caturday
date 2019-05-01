@@ -24,7 +24,7 @@ class MainActivity : BaseActivity() {
     )
 
     if (navigation.isEmpty) {
-      navigation.push(CatBreedsFragment.newInstance())
+      navigation.push(CatImagesFragment.newInstance())
     }
   }
 

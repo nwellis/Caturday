@@ -47,7 +47,7 @@ class CatImagesViewModelTests {
   @Test
   fun `get cat images success`() {
     // Arrange
-    `when`(mockCatRepository.getCatImages(anyKClass()))
+    `when`(mockCatRepository.getRandomCatImages(anyKClass()))
       .thenReturn(mockPages[0].wrapWithMockRequest())
 
     val query = CatImagesQuery(pageSize = pageSize)
@@ -64,7 +64,7 @@ class CatImagesViewModelTests {
     viewModel.setQuery(query)
 
     // Assert
-    verify(mockCatRepository, times(1)).getCatImages(anyKClass())
+    verify(mockCatRepository, times(1)).getRandomCatImages(anyKClass())
     verify(imagesObserver, times(1)).onChanged(anyKClass())
     verify(networkObserver, times(1)).onChanged(DataSourceState.Success)
   }
@@ -74,7 +74,7 @@ class CatImagesViewModelTests {
     // Arrange
     val error = AppError(message = "mock error")
 
-    `when`(mockCatRepository.getCatImages(anyKClass()))
+    `when`(mockCatRepository.getRandomCatImages(anyKClass()))
       .thenReturn(error.wrapErrorWithMockRequest())
 
     val query = CatImagesQuery(pageSize = pageSize)
@@ -91,7 +91,7 @@ class CatImagesViewModelTests {
     viewModel.setQuery(query)
 
     // Assert
-    verify(mockCatRepository, times(1)).getCatImages(anyKClass())
+    verify(mockCatRepository, times(1)).getRandomCatImages(anyKClass())
     verify(imagesObserver, times(1)).onChanged(anyKClass())
     verify(networkObserver, times(1)).onChanged(DataSourceState.Error(error))
   }
