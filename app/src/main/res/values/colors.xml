@@ -7,6 +7,11 @@
     <color name="colorAccent">#C874D9</color>
 
     <color name="lightBackground">#F5EFF0</color>
-    <color name="darkBackground">#242038</color>
+    <color name="darkBackground">#1F2122</color>
+    <color name="darkBlueBackground">#242038</color>
+
+    <color name="buttonTextPrimary">@color/colorPrimaryDark</color>
+    <color name="lightText">#F5FBEF</color>
+    <color name="darkText">#090B0C</color>
     <!--Too blue? <color name="darkBackground">#1B1F3B</color>-->
 </resources>

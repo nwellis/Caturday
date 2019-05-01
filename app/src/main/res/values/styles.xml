@@ -1,11 +1,44 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppBaseText">
+        <item name="android:textColor">@color/lightText</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="AppPaddedText">
+        <item name="android:padding">@dimen/keyline_margin</item>
+    </style>
+
+    <style name="AppHeader1" parent="AppBaseText">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="AppHeader2" parent="AppBaseText">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AppHeader2Caps" parent="AppHeader2">
+        <item name="android:capitalize">characters</item>
+    </style>
+
+    <style name="AppButtonText" parent="AppBaseText">
+        <item name="android:textColor">@color/buttonTextPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppButton">
+        <item name="android:paddingTop">@dimen/button_padding_vert</item>
+        <item name="android:paddingBottom">@dimen/button_padding_vert</item>
+        <item name="android:paddingLeft">@dimen/button_padding_horiz</item>
+        <item name="android:paddingRight">@dimen/button_padding_horiz</item>
+        <item name="android:minWidth">@dimen/button_min_width</item>
     </style>
 
 </resources>
