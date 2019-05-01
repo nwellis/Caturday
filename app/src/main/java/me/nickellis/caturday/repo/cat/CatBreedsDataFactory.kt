@@ -4,33 +4,31 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import me.nickellis.caturday.AppExecutors
-import me.nickellis.caturday.domain.CatImage
+import me.nickellis.caturday.domain.CatBreed
 import me.nickellis.caturday.domain.common.AppError
 import me.nickellis.caturday.repo.RepositoryRequest
 import me.nickellis.caturday.ui.common.state.DataSourceState
 import java.util.concurrent.Executor
 
 
-class CatImagesDataFactory(
+class CatBreedsDataFactory(
   private val repository: CatRepository,
   private val executor: Executor
-): DataSource.Factory<CatImagesQuery, CatImage>() {
+): DataSource.Factory<CatBreedsQuery, CatBreed>() {
 
-  private var query: CatImagesQuery = CatImagesQuery(page = 0, pageSize = 10)
+  private var query: CatBreedsQuery = CatBreedsQuery(page = 0, pageSize = 10)
 
-  val mutableLiveData: MutableLiveData<CatImagesDataSource> = MutableLiveData()
-  private val source: CatImagesDataSource? = mutableLiveData.value
+  val mutableLiveData: MutableLiveData<CatBreedsDataSource> = MutableLiveData()
+  private val source: CatBreedsDataSource? = mutableLiveData.value
 
-  override fun create(): DataSource<CatImagesQuery, CatImage> {
-    return CatImagesDataSource(repository, query, executor).apply {
+  override fun create(): DataSource<CatBreedsQuery, CatBreed> {
+    return CatBreedsDataSource(repository, query, executor).apply {
       mutableLiveData.postValue(this)
     }
   }
 
-  fun setQuery(query: CatImagesQuery) {
+  fun setQuery(query: CatBreedsQuery) {
     this.query = query
     source?.invalidate()
   }
@@ -38,15 +36,15 @@ class CatImagesDataFactory(
   fun retryFailedCall() = source?.retryFailedCall()
 }
 
-class CatImagesDataSource(
+class CatBreedsDataSource(
   private val repository: CatRepository,
-  private val query: CatImagesQuery,
+  private val query: CatBreedsQuery,
   private val retryExecutor: Executor
-): PageKeyedDataSource<CatImagesQuery, CatImage>() {
+): PageKeyedDataSource<CatBreedsQuery, CatBreed>() {
 
   private var retry: (() -> Any)? = null
 
-  private var inflightRequest: RepositoryRequest<List<CatImage>>? = null
+  private var inflightRequest: RepositoryRequest<List<CatBreed>>? = null
 
   val networkState = MutableLiveData<DataSourceState>()
   var initialLoadSize = 0
@@ -58,8 +56,8 @@ class CatImagesDataSource(
   }
 
   override fun loadInitial(
-    params: LoadInitialParams<CatImagesQuery>,
-    callback: LoadInitialCallback<CatImagesQuery, CatImage>
+    params: LoadInitialParams<CatBreedsQuery>,
+    callback: LoadInitialCallback<CatBreedsQuery, CatBreed>
   ) {
     networkState.postValue(DataSourceState.LoadInitial)
     initialLoadSize = params.requestedLoadSize
@@ -67,11 +65,11 @@ class CatImagesDataSource(
     try {
       val key = query.copy(page = 0, pageSize = params.requestedLoadSize)
 
-      val catImages = runBlocking {
-        repository.getCatImages(key).also { inflightRequest = it }.await()
+      val catBreeds = runBlocking {
+        repository.getCatBreeds(key).also { inflightRequest = it }.await()
       }
 
-      callback.onResult(catImages, null, query.copy(page = query.page + 1))
+      callback.onResult(catBreeds, null, query.copy(page = query.page + 1))
       networkState.postValue(DataSourceState.Success)
 
     } catch (ex: CancellationException) {
@@ -84,7 +82,7 @@ class CatImagesDataSource(
     }
   }
 
-  override fun loadAfter(params: LoadParams<CatImagesQuery>, callback: LoadCallback<CatImagesQuery, CatImage>) {
+  override fun loadAfter(params: LoadParams<CatBreedsQuery>, callback: LoadCallback<CatBreedsQuery, CatBreed>) {
     networkState.postValue(DataSourceState.LoadAfter)
     initialLoadSize = params.requestedLoadSize
 
@@ -92,11 +90,11 @@ class CatImagesDataSource(
       // TODO: I know that the initialLoadSize != requestedLoadSize, so that will mess up this pagination. Fix!
       val key = query.copy(page = 0, pageSize = params.requestedLoadSize)
 
-      val catImages = runBlocking {
-        repository.getCatImages(key).also { inflightRequest = it }.await()
+      val catBreeds = runBlocking {
+        repository.getCatBreeds(key).also { inflightRequest = it }.await()
       }
 
-      callback.onResult(catImages, query.copy(page = query.page + 1))
+      callback.onResult(catBreeds, query.copy(page = query.page + 1))
       networkState.postValue(DataSourceState.Success)
 
     } catch (ex: CancellationException) {
@@ -110,8 +108,8 @@ class CatImagesDataSource(
   }
 
   override fun loadBefore(
-    params: LoadParams<CatImagesQuery>,
-    callback: LoadCallback<CatImagesQuery, CatImage>
+    params: LoadParams<CatBreedsQuery>,
+    callback: LoadCallback<CatBreedsQuery, CatBreed>
   ) {
   }
 

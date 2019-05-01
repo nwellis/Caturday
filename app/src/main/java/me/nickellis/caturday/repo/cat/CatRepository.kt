@@ -12,8 +12,6 @@ import retrofit2.Response
 
 /**
  * Repository for querying all cat data.
- *
- * @see [Docs](https://docs.thecatapi.com/)
  */
 interface CatRepository {
   /**
@@ -26,6 +24,7 @@ interface CatRepository {
   /**
    * Need some cat facts? Use this to get some info on each cat breed.
    * @param query Used to specify criteria and request which page to load.
+   * @return a repository request with the specified page of results.
    */
   fun getCatBreeds(query: CatBreedsQuery): RepositoryRequest<List<CatBreed>>
 }
