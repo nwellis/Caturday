@@ -1,4 +1,4 @@
-package me.nickellis.caturday.ui.images
+package me.nickellis.caturday.ui.breeds
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -7,26 +7,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.cat_images_fragment.*
 
 import me.nickellis.caturday.R
 import me.nickellis.caturday.injector
-import me.nickellis.caturday.repo.cat.CatImageSize
-import me.nickellis.caturday.repo.cat.CatImagesQuery
+import me.nickellis.caturday.repo.cat.CatBreedsQuery
 import me.nickellis.caturday.ui.BaseFragment
-import me.nickellis.caturday.ui.common.list.CatImagesPagedAdapter
+import me.nickellis.caturday.ui.common.list.CatBreedsPagedAdapter
 import me.nickellis.caturday.ui.common.state.DataSourceState
 
-class CatImagesFragment : BaseFragment() {
+class CatBreedsFragment : BaseFragment() {
 
   companion object {
-    const val TAG = "CatImagesFragment"
-    fun newInstance() = CatImagesFragment()
+    const val TAG = "CatBreedsFragment"
+    fun newInstance() = CatBreedsFragment()
   }
 
-  private lateinit var viewModel: CatImagesViewModel
-  private lateinit var imagesAdapter: CatImagesPagedAdapter
+  private lateinit var viewModel: CatBreedsViewModel
+  private lateinit var breedsAdapter: CatBreedsPagedAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -37,27 +37,27 @@ class CatImagesFragment : BaseFragment() {
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    return inflater.inflate(R.layout.cat_images_fragment, container, false)
+    return inflater.inflate(R.layout.cat_breeds_fragment, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    imagesAdapter = CatImagesPagedAdapter()
+    breedsAdapter = CatBreedsPagedAdapter()
     v_recycler.apply {
-      adapter = imagesAdapter
-      layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+      adapter = breedsAdapter
+      layoutManager = LinearLayoutManager(context)
     }
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
-    viewModel = ViewModelProviders.of(this, viewModelFactory).get(CatImagesViewModel::class.java)
+    viewModel = ViewModelProviders.of(this, viewModelFactory).get(CatBreedsViewModel::class.java)
 
-    viewModel.catImages.observe(this, Observer(imagesAdapter::submitList))
+    viewModel.catBreeds.observe(this, Observer(breedsAdapter::submitList))
     viewModel.networkState.observe(this, networkObserver)
 
-    viewModel.setQuery(CatImagesQuery(imageSize = CatImageSize.Small, pageSize = 50))
+    viewModel.setQuery(CatBreedsQuery(pageSize = 50))
   }
 
   private val networkObserver = Observer<DataSourceState> { state ->

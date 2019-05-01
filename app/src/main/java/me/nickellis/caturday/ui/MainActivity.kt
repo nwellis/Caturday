@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import me.nickellis.caturday.R
 import me.nickellis.caturday.injector
+import me.nickellis.caturday.ui.breeds.CatBreedsFragment
 import me.nickellis.caturday.ui.common.navigation.FragmentStack
 import me.nickellis.caturday.ui.images.CatImagesFragment
 
@@ -23,7 +24,7 @@ class MainActivity : BaseActivity() {
     )
 
     if (navigation.isEmpty) {
-      navigation.push(CatImagesFragment.newInstance())
+      navigation.push(CatBreedsFragment.newInstance())
     }
   }
 
