@@ -2,7 +2,6 @@ package me.nickellis.caturday.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import androidx.paging.DataSource
 import androidx.paging.PagedList
 import kotlinx.coroutines.*
 import me.nickellis.caturday.InstantAppExecutors
@@ -12,14 +11,11 @@ import me.nickellis.caturday.ktx.*
 import me.nickellis.caturday.repo.cat.CatImagesQuery
 import me.nickellis.caturday.repo.cat.CatRepository
 import me.nickellis.caturday.ui.common.state.DataSourceState
-import me.nickellis.caturday.ui.common.state.NetworkState
-import me.nickellis.caturday.ui.search.SearchCatsViewModel
+import me.nickellis.caturday.ui.images.CatImagesViewModel
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers
-import org.mockito.InOrder
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
@@ -27,7 +23,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class SearchCatsViewModelTests {
+class CatImagesViewModelTests {
 
   @JvmField @Rule
   val instantExecutorRule = InstantTaskExecutorRule()
@@ -40,16 +36,16 @@ class SearchCatsViewModelTests {
 
   @Mock private lateinit var mockCatRepository: CatRepository
 
-  private lateinit var viewModel: SearchCatsViewModel
+  private lateinit var viewModel: CatImagesViewModel
 
   @Before
   fun setUp() {
     val executors = InstantAppExecutors()
-    viewModel = SearchCatsViewModel(mockCatRepository, executors)
+    viewModel = CatImagesViewModel(mockCatRepository, executors)
   }
 
   @Test
-  fun `search for images success`() {
+  fun `get cat images success`() {
     // Arrange
     `when`(mockCatRepository.getCatImages(anyKClass()))
       .thenReturn(mockPages[0].wrapWithMockRequest())
@@ -74,7 +70,7 @@ class SearchCatsViewModelTests {
   }
 
   @Test
-  fun `search for images error`() {
+  fun `get cat images error`() {
     // Arrange
     val error = AppError(message = "mock error")
 

@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import me.nickellis.caturday.ui.search.SearchCatsViewModel
+import me.nickellis.caturday.ui.images.CatImagesViewModel
 
 @Module
 abstract class ViewModelModule {
 
-  @Binds @IntoMap @ViewModelKey(SearchCatsViewModel::class)
-  abstract fun bindSearchCatsViewModel(searchCatsViewModel: SearchCatsViewModel): ViewModel
+  @Binds @IntoMap @ViewModelKey(CatImagesViewModel::class)
+  abstract fun bindCatImagesViewModel(catImagesViewModel: CatImagesViewModel): ViewModel
 
   @Binds
   abstract fun bindViewModelFactory(factory: AppViewModelFactory): ViewModelProvider.Factory

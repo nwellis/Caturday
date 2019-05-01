@@ -6,7 +6,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:background="@color/darkBackground"
-  tools:context=".ui.search.SearchCatsFragment">
+  tools:context=".ui.images.CatImagesFragment">
 
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/v_recycler"

@@ -6,16 +6,11 @@ import androidx.fragment.app.Fragment
 import dagger.Component
 import me.nickellis.caturday.repo.RepositoryModule
 import me.nickellis.caturday.repo.cat.CatRepository
-import me.nickellis.caturday.service.ErrorHandler
-import me.nickellis.caturday.service.ServiceModule
-import me.nickellis.caturday.service.cat.CatService
 import me.nickellis.caturday.ui.BaseActivity
 import me.nickellis.caturday.ui.BaseFragment
 import me.nickellis.caturday.ui.MainActivity
 import me.nickellis.caturday.ui.common.viewmodel.ViewModelModule
-import me.nickellis.caturday.ui.search.SearchCatsFragment
-import retrofit2.Response
-import javax.inject.Named
+import me.nickellis.caturday.ui.images.CatImagesFragment
 import javax.inject.Singleton
 
 interface AppComponentProvider {
@@ -42,6 +37,6 @@ interface AppComponent {
   fun inject(activity: MainActivity)
 
   fun inject(fragment: BaseFragment)
-  fun inject(fragment: SearchCatsFragment)
+  fun inject(fragment: CatImagesFragment)
 
 }
