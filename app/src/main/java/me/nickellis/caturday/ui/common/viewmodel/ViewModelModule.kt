@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import me.nickellis.caturday.ui.breeds.BreedDetailViewModel
 import me.nickellis.caturday.ui.breeds.CatBreedsViewModel
 import me.nickellis.caturday.ui.images.CatImagesViewModel
 
@@ -16,6 +17,9 @@ abstract class ViewModelModule {
 
   @Binds @IntoMap @ViewModelKey(CatBreedsViewModel::class)
   abstract fun bindCatBreedsViewModel(catBreedsViewModel: CatBreedsViewModel): ViewModel
+
+  @Binds @IntoMap @ViewModelKey(BreedDetailViewModel::class)
+  abstract fun bindBreedDetailViewModel(breedDetailViewModel: BreedDetailViewModel): ViewModel
 
   @Binds
   abstract fun bindViewModelFactory(factory: AppViewModelFactory): ViewModelProvider.Factory
