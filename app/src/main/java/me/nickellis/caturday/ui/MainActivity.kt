@@ -41,9 +41,9 @@ class MainActivity : BaseActivity(), SharedViewModelProvider, FragmentObserver {
     }
   }
 
-  override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+  override fun onSaveInstanceState(outState: Bundle) {
     navigation.save(outState)
-    super.onSaveInstanceState(outState, outPersistentState)
+    super.onSaveInstanceState(outState)
   }
 
   override fun onBackPressed() {
