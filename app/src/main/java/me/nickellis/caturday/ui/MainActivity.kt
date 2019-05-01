@@ -37,7 +37,7 @@ class MainActivity : BaseActivity(), SharedViewModelProvider, FragmentObserver {
     )
 
     if (navigation.isEmpty) {
-      navigation.push(CatBreedsFragment.newInstance())
+      navigation.push(CatImagesFragment.newInstance())
     }
   }
 

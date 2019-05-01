@@ -1,6 +1,7 @@
 package me.nickellis.caturday.ui.images
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -21,6 +22,8 @@ class CatImagesViewModel @Inject constructor(
 
   private val factory: CatImagesDataFactory = CatImagesDataFactory(catRepository, appExecutors.networkIO)
 
+  private val _query = MutableLiveData<CatImagesQuery>()
+  val query = _query as LiveData<CatImagesQuery>
   val catImages: LiveData<PagedList<CatImage>>
   val networkState: LiveData<DataSourceState>
 
@@ -40,7 +43,10 @@ class CatImagesViewModel @Inject constructor(
   }
 
   fun setQuery(query: CatImagesQuery): CatImagesViewModel {
-    factory.setQuery(query)
+    if (query != _query.value) {
+      _query.postValue(query)
+      factory.setQuery(query)
+    }
     return this
   }
 
