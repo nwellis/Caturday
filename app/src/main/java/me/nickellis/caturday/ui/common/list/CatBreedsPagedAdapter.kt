@@ -6,6 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import me.nickellis.caturday.domain.CatBreed
 import me.nickellis.caturday.ui.common.list.viewholder.CatBreedViewHolder
 
+sealed class CatBreedsAdapterEvent
+data class BreedSelected(val breed: CatBreed): CatBreedsAdapterEvent()
+
+typealias OnCatBreedsAdapterEventListener = (adapterEvent: CatBreedsAdapterEvent) -> Unit
+
 class CatBreedsPagedAdapter: PagedListAdapter<CatBreed, CatBreedViewHolder>(diffCallback) {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatBreedViewHolder {
@@ -13,7 +18,19 @@ class CatBreedsPagedAdapter: PagedListAdapter<CatBreed, CatBreedViewHolder>(diff
   }
 
   override fun onBindViewHolder(holder: CatBreedViewHolder, position: Int) {
-    holder.bindTo(getItem(position))
+    holder.apply {
+      val breed = getItem(position)
+      bindTo(breed)
+      itemView.setOnClickListener {
+        breed?.let { onEvent?.invoke(BreedSelected(it)) }
+      }
+    }
+  }
+
+  private var onEvent: OnCatBreedsAdapterEventListener? = null
+  fun onEvent(l: OnCatBreedsAdapterEventListener): CatBreedsPagedAdapter {
+    onEvent = l
+    return this
   }
 
   companion object {

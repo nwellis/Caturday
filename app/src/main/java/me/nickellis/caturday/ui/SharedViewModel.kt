@@ -1,4 +1,4 @@
-package me.nickellis.caturday.ui.breeds
+package me.nickellis.caturday.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,9 +16,12 @@ import me.nickellis.caturday.ui.common.state.NetworkState
 import me.nickellis.caturday.ui.common.viewmodel.BaseViewModel
 import javax.inject.Inject
 
-class BreedDetailViewModel @Inject constructor(
+class SharedViewModel @Inject constructor(
   appExecutors: AppExecutors
 ): BaseViewModel(appExecutors) {
-  init {
-  }
+  val selectedBreed = MutableLiveData<CatBreed>()
+}
+
+interface SharedViewModelProvider {
+  val sharedViewModel: SharedViewModel
 }

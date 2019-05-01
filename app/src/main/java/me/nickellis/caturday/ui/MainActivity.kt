@@ -2,15 +2,28 @@ package me.nickellis.caturday.ui
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import me.nickellis.caturday.R
 import me.nickellis.caturday.injector
+import me.nickellis.caturday.ui.breeds.BreedDetailFragment
 import me.nickellis.caturday.ui.breeds.CatBreedsFragment
+import me.nickellis.caturday.ui.common.events.FragmentBack
+import me.nickellis.caturday.ui.common.events.FragmentEvent
+import me.nickellis.caturday.ui.common.events.FragmentObserver
+import me.nickellis.caturday.ui.common.events.NewBreedDetail
 import me.nickellis.caturday.ui.common.navigation.FragmentStack
 import me.nickellis.caturday.ui.images.CatImagesFragment
+import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), SharedViewModelProvider, FragmentObserver {
 
+  @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
   private lateinit var navigation: FragmentStack
+
+  override val sharedViewModel: SharedViewModel by lazy {
+    ViewModelProviders.of(this, viewModelFactory).get(SharedViewModel::class.java)
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -24,12 +37,29 @@ class MainActivity : BaseActivity() {
     )
 
     if (navigation.isEmpty) {
-      navigation.push(CatImagesFragment.newInstance())
+      navigation.push(CatBreedsFragment.newInstance())
     }
   }
 
   override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
     navigation.save(outState)
     super.onSaveInstanceState(outState, outPersistentState)
+  }
+
+  override fun onBackPressed() {
+    navigation.pop()
+    if (navigation.isEmpty) {
+      super.onBackPressed()
+    }
+  }
+
+  override fun onFragmentEvent(event: FragmentEvent) {
+    when (event) {
+      is FragmentBack -> onBackPressed()
+      is NewBreedDetail -> {
+        sharedViewModel.selectedBreed.postValue(event.breed)
+        navigation.push(BreedDetailFragment.newInstance())
+      }
+    }
   }
 }

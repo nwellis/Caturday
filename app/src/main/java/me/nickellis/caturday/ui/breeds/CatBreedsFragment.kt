@@ -1,5 +1,6 @@
 package me.nickellis.caturday.ui.breeds
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,9 @@ import me.nickellis.caturday.R
 import me.nickellis.caturday.injector
 import me.nickellis.caturday.repo.cat.CatBreedsQuery
 import me.nickellis.caturday.ui.BaseFragment
+import me.nickellis.caturday.ui.common.events.FragmentObserver
+import me.nickellis.caturday.ui.common.events.NewBreedDetail
+import me.nickellis.caturday.ui.common.list.BreedSelected
 import me.nickellis.caturday.ui.common.list.CatBreedsPagedAdapter
 import me.nickellis.caturday.ui.common.state.DataSourceState
 
@@ -44,14 +48,25 @@ class CatBreedsFragment : BaseFragment() {
     super.onViewCreated(view, savedInstanceState)
 
     breedsAdapter = CatBreedsPagedAdapter()
+      .onEvent { adapterEvent ->
+        when (adapterEvent) {
+          is BreedSelected -> fragmentObserver.onFragmentEvent(NewBreedDetail(adapterEvent.breed))
+        }
+      }
+
     v_recycler.apply {
       adapter = breedsAdapter
       layoutManager = LinearLayoutManager(context)
     }
   }
 
+  override fun onAttach(context: Context) {
+    super.onAttach(context)
+  }
+
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
+
     viewModel = ViewModelProviders.of(this, viewModelFactory).get(CatBreedsViewModel::class.java)
 
     viewModel.catBreeds.observe(this, Observer(breedsAdapter::submitList))
