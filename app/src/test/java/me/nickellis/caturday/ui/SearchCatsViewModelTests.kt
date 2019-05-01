@@ -2,21 +2,24 @@ package me.nickellis.caturday.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import androidx.paging.DataSource
 import androidx.paging.PagedList
 import kotlinx.coroutines.*
 import me.nickellis.caturday.InstantAppExecutors
 import me.nickellis.caturday.domain.CatImage
-import me.nickellis.caturday.ktx.anyKClass
-import me.nickellis.caturday.ktx.mock
-import me.nickellis.caturday.ktx.wrapWithMockRequest
+import me.nickellis.caturday.domain.common.AppError
+import me.nickellis.caturday.ktx.*
 import me.nickellis.caturday.repo.cat.CatImagesQuery
 import me.nickellis.caturday.repo.cat.CatRepository
 import me.nickellis.caturday.ui.common.state.DataSourceState
+import me.nickellis.caturday.ui.common.state.NetworkState
 import me.nickellis.caturday.ui.search.SearchCatsViewModel
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers
+import org.mockito.InOrder
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
@@ -43,17 +46,14 @@ class SearchCatsViewModelTests {
   fun setUp() {
     val executors = InstantAppExecutors()
     viewModel = SearchCatsViewModel(mockCatRepository, executors)
-
-    `when`(mockCatRepository.getCatImages(anyKClass()))
-      .thenReturn(mockPages[0].wrapWithMockRequest())
-      .thenReturn(mockPages[1].wrapWithMockRequest())
-      .thenReturn(mockPages[2].wrapWithMockRequest())
-      .thenReturn(mockPages[3].wrapWithMockRequest())
   }
 
   @Test
-  fun `search for images`() {
+  fun `search for images success`() {
     // Arrange
+    `when`(mockCatRepository.getCatImages(anyKClass()))
+      .thenReturn(mockPages[0].wrapWithMockRequest())
+
     val query = CatImagesQuery(pageSize = pageSize)
 
     val imagesObserver = mock<Observer<PagedList<CatImage>>>()
@@ -63,14 +63,40 @@ class SearchCatsViewModelTests {
       catImages.observeForever(imagesObserver)
       networkState.observeForever(networkObserver)
     }
+
     // Act
     viewModel.setQuery(query)
 
     // Assert
-    verify(mockCatRepository).getCatImages(anyKClass())
+    verify(mockCatRepository, times(1)).getCatImages(anyKClass())
+    verify(imagesObserver, times(1)).onChanged(anyKClass())
+    verify(networkObserver, times(1)).onChanged(DataSourceState.Success)
   }
 
-  suspend fun foo() {
-    delay(50)
+  @Test
+  fun `search for images error`() {
+    // Arrange
+    val error = AppError(message = "mock error")
+
+    `when`(mockCatRepository.getCatImages(anyKClass()))
+      .thenReturn(error.wrapErrorWithMockRequest())
+
+    val query = CatImagesQuery(pageSize = pageSize)
+
+    val imagesObserver = mock<Observer<PagedList<CatImage>>>()
+    val networkObserver = mock<Observer<DataSourceState>>()
+
+    viewModel.apply {
+      catImages.observeForever(imagesObserver)
+      networkState.observeForever(networkObserver)
+    }
+
+    // Act
+    viewModel.setQuery(query)
+
+    // Assert
+    verify(mockCatRepository, times(1)).getCatImages(anyKClass())
+    verify(imagesObserver, times(1)).onChanged(anyKClass())
+    verify(networkObserver, times(1)).onChanged(DataSourceState.Error(error))
   }
 }

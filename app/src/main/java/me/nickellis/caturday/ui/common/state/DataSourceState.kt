@@ -7,5 +7,5 @@ sealed class DataSourceState {
   object LoadInitial: DataSourceState()
   object LoadAfter: DataSourceState()
   object Success: DataSourceState()
-  class Error(val error: AppError): DataSourceState()
+  data class Error(val error: AppError): DataSourceState()
 }

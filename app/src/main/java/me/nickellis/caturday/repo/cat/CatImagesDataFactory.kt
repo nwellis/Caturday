@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import me.nickellis.caturday.AppExecutors
 import me.nickellis.caturday.domain.CatImage
@@ -67,10 +68,12 @@ class CatImagesDataSource(
       val key = query.copy(page = 0, pageSize = params.requestedLoadSize)
 
       val catImages = runBlocking {
+        delay(1000)
         repository.getCatImages(key).also { inflightRequest = it }.await()
       }
 
       callback.onResult(catImages, null, query.copy(page = query.page + 1))
+      networkState.postValue(DataSourceState.Success)
 
     } catch (ex: CancellationException) {
       // Normal coroutine exception for cancellation, don't do any action
@@ -95,6 +98,7 @@ class CatImagesDataSource(
       }
 
       callback.onResult(catImages, query.copy(page = query.page + 1))
+      networkState.postValue(DataSourceState.Success)
 
     } catch (ex: CancellationException) {
       // Normal coroutine exception for cancellation, don't do any action

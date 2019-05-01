@@ -39,5 +39,4 @@ fun <T> List<T>.toMockPagedList(): PagedList<T> {
 
 fun <T> T.wrapWithMockRequest(): RepositoryRequest<T> = MockRepositoryRequest(this)
 
-fun <T> AppError.wrapWithMockRequest(message: String? = null): RepositoryRequest<T>
-    = MockRepositoryRequest(null, AppError(message ?: "${UUID.randomUUID()}: mock request error"))
+fun <T> AppError.wrapErrorWithMockRequest(): RepositoryRequest<T> = MockRepositoryRequest(null, this)
