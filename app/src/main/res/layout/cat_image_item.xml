@@ -7,8 +7,8 @@
   android:layout_height="wrap_content"
   android:layout_margin="8dp"
   android:padding="8dp"
-  app:cardElevation="4dp"
-  app:cardBackgroundColor="@color/cardview_dark_background">
+  app:cardElevation="@dimen/card_elevation"
+  app:cardBackgroundColor="@color/darkBackground">
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"

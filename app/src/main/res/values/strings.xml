@@ -1,5 +1,15 @@
 <resources>
-    <string name="app_name">Caturday</string>
+  <string name="app_name">Caturday</string>
 
-    <string name="error_default">We\'re sorry, an unknown error has occurred.</string>
+  <string name="btn_wikipedia">Wikipedia</string>
+
+  <string name="error_default">We\'re sorry, an unknown error has occurred.</string>
+
+  <string name="placeholder_bengal">Bengal</string>
+  <string name="placeholder_bengal_description">Bengals are a lot of fun to live with, but they\'re definitely not the
+    cat for everyone, or for first-time cat owners. Extremely intelligent, curious and active, they demand a lot of
+    interaction and woe betide the owner who doesn\'t provide it.
+  </string>
+  <string name="placholder_bengal_traits">Alert, Agile, Energetic, Demanding, Intelligent</string>
+
 </resources>

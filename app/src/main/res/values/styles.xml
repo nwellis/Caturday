@@ -8,10 +8,10 @@
 
     <style name="AppBaseText">
         <item name="android:textColor">@color/lightText</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="AppPaddedText">
+    <style name="AppPaddedText" parent="AppBaseText">
         <item name="android:padding">@dimen/keyline_margin</item>
     </style>
 
@@ -29,16 +29,26 @@
 
     <style name="AppButtonText" parent="AppBaseText">
         <item name="android:textColor">@color/buttonTextPrimary</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="AppButton">
+    <style name="AppButton" parent="AppButtonText">
+        <item name="android:minWidth">@dimen/button_min_width</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+
+        <!--<item name="android:foreground">?android:selectableItemBackground</item>-->
+        <item name="android:background">@drawable/pill_primary_outline</item>
+
         <item name="android:paddingTop">@dimen/button_padding_vert</item>
         <item name="android:paddingBottom">@dimen/button_padding_vert</item>
         <item name="android:paddingLeft">@dimen/button_padding_horiz</item>
         <item name="android:paddingRight">@dimen/button_padding_horiz</item>
-        <item name="android:minWidth">@dimen/button_min_width</item>
+        <item name="android:layout_marginTop">@dimen/button_margin_vert</item>
+        <item name="android:layout_marginBottom">@dimen/button_margin_vert</item>
+        <item name="android:layout_marginStart">@dimen/button_margin_horiz</item>
+        <item name="android:layout_marginEnd">@dimen/button_margin_horiz</item>
     </style>
 
 </resources>

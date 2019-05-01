@@ -5,6 +5,9 @@
     <color name="colorPrimary">#B14AED</color>
     <color name="colorPrimaryDark">#913DC2</color>
     <color name="colorAccent">#C874D9</color>
+    <color name="colorDisabled">@color/lightGray</color>
+
+    <color name="lightGray">#5C5D5E</color>
 
     <color name="lightBackground">#F5EFF0</color>
     <color name="darkBackground">#1F2122</color>
