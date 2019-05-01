@@ -8,14 +8,14 @@ interface PageRequest {
 data class CatImagesQuery(
   val imageSize: CatImageSize = CatImageSize.Small,
   override val page: Int = 0,
-  override val pageSize: Int
+  override val pageSize: Int = 10
 ): PageRequest {
   fun next() = copy(page = page + 1)
 }
 
 data class CatBreedsQuery(
   override val page: Int = 0,
-  override val pageSize: Int
+  override val pageSize: Int = 10
 ): PageRequest {
   fun next() = copy(page = page + 1)
 }

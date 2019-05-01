@@ -60,10 +60,6 @@ class CatBreedsFragment : BaseFragment() {
     }
   }
 
-  override fun onAttach(context: Context) {
-    super.onAttach(context)
-  }
-
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
@@ -72,7 +68,7 @@ class CatBreedsFragment : BaseFragment() {
     viewModel.catBreeds.observe(this, Observer(breedsAdapter::submitList))
     viewModel.networkState.observe(this, networkObserver)
 
-    viewModel.setQuery(CatBreedsQuery(pageSize = 50))
+    viewModel.getCatBreeds()
   }
 
   private val networkObserver = Observer<DataSourceState> { state ->
