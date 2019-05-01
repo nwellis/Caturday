@@ -2,14 +2,22 @@ package me.nickellis.caturday.repo.cat
 
 import me.nickellis.caturday.domain.CatBreed
 import me.nickellis.caturday.domain.CatImage
+import me.nickellis.caturday.domain.CatImageDetail
 import me.nickellis.caturday.ktx.ensureNonNullId
 import me.nickellis.caturday.service.cat.ApiCatBreed
 import me.nickellis.caturday.service.cat.ApiCatImage
+import me.nickellis.caturday.service.cat.ApiCatImageDetail
 
 
 fun ApiCatImage.toCatImage() = CatImage(
   id = id.ensureNonNullId("Found null ID from cat API get images"),
   url = url
+)
+
+fun ApiCatImageDetail.toCatImage() = CatImage(
+  id = id.ensureNonNullId("Found null ID from cat API get images"),
+  url = url,
+  details = CatImageDetail(filename = filename)
 )
 
 fun ApiCatBreed.toCatBreed() = CatBreed(

@@ -16,9 +16,16 @@ interface CatRepository {
   /**
    * Get cat images right meow!
    * @param query Used to specify criteria and request which page to load.
-   * @return a repository request with the specified page of results.
+   * @return a repository request with the specified page of results. [CatImage.details] will not be populated.
    */
   fun getRandomCatImages(query: CatImagesQuery): RepositoryRequest<List<CatImage>>
+
+  /**
+   * Get a more "detailed" view of a cat image.
+   * @param imageId image ID found from [CatImage.id]
+   * @return a repository request with the specified image. [CatImage.details] will be populated.
+   */
+  fun getCatImage(imageId: String): RepositoryRequest<CatImage>
 
   /**
    * Need some cat facts? Use this to get some info on each cat breed.
@@ -35,7 +42,7 @@ class ApiCatRepository(
 
   override fun getRandomCatImages(query: CatImagesQuery): RepositoryRequest<List<CatImage>> {
 
-    val size = when (query.imageSize) {
+    val size = when(query.imageSize) {
       CatImageSize.Max -> "full"
       CatImageSize.Medium -> "med"
       CatImageSize.Small -> "small"
@@ -49,6 +56,15 @@ class ApiCatRepository(
       .asRepositoryRequest(
         errorHandler = errorHandler,
         mapper = { apiCatImages -> apiCatImages.map { it.toCatImage() } }
+      )
+  }
+
+  override fun getCatImage(imageId: String): RepositoryRequest<CatImage> {
+    return catService
+      .getCatImage(imageId)
+      .asRepositoryRequest(
+        errorHandler = errorHandler,
+        mapper = { apiCatImageDetail -> apiCatImageDetail.toCatImage() }
       )
   }
 

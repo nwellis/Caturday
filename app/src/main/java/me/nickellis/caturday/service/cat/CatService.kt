@@ -13,7 +13,8 @@ private const val Prefix = "/v1"
 interface CatService {
 
   /**
-   * Gets images of cats.
+   * Gets images of cats. You can set this to ascending or descending but I really like the random functionality
+   * that's the default.
    *
    * @param size `"full"`, `"med"`, `"small"`, `"thumb"`
    * @param page page location, starting at 0
@@ -31,6 +32,23 @@ interface CatService {
     @Query("limit") limit: Int,
     @Query("format") format: String = "json"
   ): Call<List<ApiCatImage>>
+
+  /**
+   * Get the full cat image details.
+   *
+   * @param size `"full"`, `"med"`, `"small"`, `"thumb"`
+   * @param page page location, starting at 0
+   * @param limit min 1, max 100
+   * @param format `"json"` or `"src"`
+   *
+   * @return gets a specific cat image
+   *
+   * @see [Doc](https://docs.thecatapi.com/api-reference/images/images-get)
+   */
+  @GET("$Prefix/images/search")
+  fun getCatImage(
+    @Query("image_id") imageId: String
+  ): Call<ApiCatImageDetail>
 
   /**
    * Gets all the cat breeds (paginated)

@@ -1,11 +1,16 @@
 package me.nickellis.caturday.service.cat
 
 
-data class ApiCatImage(
+open class ApiCatImage(
   val id: String? = null,
   val url: String? = null,
-  val width: Int = 0,
-  val height: Int = 0
   //val categories: List<Categories>,
-  //val breeds: List<Breeds>
+  val breeds: List<ApiCatBreed>
 )
+
+class ApiCatImageDetail(
+  id: String?,
+  url: String?,
+  breeds: List<ApiCatBreed>,
+  val filename: String?
+): ApiCatImage(id, url, breeds)
