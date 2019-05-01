@@ -29,7 +29,7 @@ class CatImagesViewModelTests {
   val instantExecutorRule = InstantTaskExecutorRule()
 
   private val pageSize = 25
-  private val mockData = (0 until 1000).map { id -> CatImage(id = id.toString(), url = "$id") }
+  private val mockData = (0 until 1000).map { id -> CatImage(id = id.toString(), url = "$id", breeds = emptyList()) }
   private val mockPages = (0 until mockData.size step pageSize).map { cursor ->
     mockData.subList(cursor, cursor + pageSize)
   }
