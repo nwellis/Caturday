@@ -4,6 +4,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        
+        <item name="actionBarStyle">@style/AppActionBarTheme</item>
+        <item name="android:windowContentOverlay">@null</item> <!-- Remove the shadow for < API 21 -->
+    </style>
+
+    <style name="AppActionBarTheme" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="elevation">0dp</item>
     </style>
 
     <style name="AppBaseText">

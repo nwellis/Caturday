@@ -15,6 +15,7 @@
 
     <color name="buttonTextPrimary">@color/colorPrimaryDark</color>
     <color name="lightText">#F5FBEF</color>
+    <color name="lightText2">#C9C4C5</color>
     <color name="darkText">#090B0C</color>
     <!--Too blue? <color name="darkBackground">#1B1F3B</color>-->
 </resources>

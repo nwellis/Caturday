@@ -1,6 +1,8 @@
 <resources>
   <string name="app_name">Caturday</string>
 
+  <string name="btn_images">Images</string>
+  <string name="btn_breeds">Breeds</string>
   <string name="btn_wikipedia">Wikipedia</string>
 
   <string name="error_default">We\'re sorry, an unknown error has occurred.</string>
