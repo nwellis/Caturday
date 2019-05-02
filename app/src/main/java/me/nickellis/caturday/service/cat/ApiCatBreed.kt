@@ -7,6 +7,7 @@ data class ApiCatBreed(
   @SerializedName("id") val id: String,
   @SerializedName("reference_image_id") val referenceImageId: String?,
   @SerializedName("name") val name: String?,
+  @SerializedName("description") val description: String?,
   @SerializedName("temperament") val temperament: String?,
   @SerializedName("life_span") val lifeSpan: String?,
   @SerializedName("alt_names") val altNames: String?,

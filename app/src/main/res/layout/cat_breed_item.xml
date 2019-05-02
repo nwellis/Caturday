@@ -6,7 +6,7 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:layout_margin="8dp"
-  android:padding="8dp"
+  android:padding="@dimen/keyline_margin"
   app:cardElevation="4dp"
   app:cardBackgroundColor="@color/darkBackground">
   <LinearLayout
@@ -20,7 +20,7 @@
       android:padding="@dimen/keyline_margin"
       style="@style/AppHeader1"/>
     <TextView
-      android:id="@+id/v_origin"
+      android:id="@+id/v_temperament"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textStyle="italic"

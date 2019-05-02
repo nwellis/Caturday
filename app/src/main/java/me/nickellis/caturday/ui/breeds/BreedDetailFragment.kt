@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.breed_detail_fragment.*
 import me.nickellis.caturday.R
 import me.nickellis.caturday.domain.CatBreed
 import me.nickellis.caturday.injector
+import me.nickellis.caturday.ktx.visible
 import me.nickellis.caturday.ui.BaseFragment
 
 class BreedDetailFragment : BaseFragment() {
@@ -41,8 +42,20 @@ class BreedDetailFragment : BaseFragment() {
   }
 
   private val breedObserver = Observer<CatBreed> { breed ->
-    v_name.text = breed.name
-    v_description.text = breed.origin
+    breed.apply {
+      v_name.text = name
+      v_temperament.text = temperament
+      v_description.text = description
+
+      val blankToNullWikiUrl = wikipediaUrl?.takeIf { it.isNotBlank() }
+      v_wikipedia_button.visible(blankToNullWikiUrl != null)
+      blankToNullWikiUrl?.let { url ->
+        v_wikipedia_button.setOnClickListener {
+
+        }
+      }
+
+    }
   }
 
 }

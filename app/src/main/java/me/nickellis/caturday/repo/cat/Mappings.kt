@@ -26,6 +26,7 @@ fun ApiCatBreed.toCatBreed(r: Resources) = CatBreed(
   id = id.ensureNonNullId("Found null ID from cat API get breeds"),
   referenceImageId = referenceImageId,
   name = name,
+  description = description,
   temperament = temperament,
   lifeSpan = lifeSpan,
   altNames = altNames,

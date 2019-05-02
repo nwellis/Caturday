@@ -5,6 +5,7 @@ data class CatBreed(
   val id: String,
   val referenceImageId: String?,
   val name: String?,
+  val description: String?,
   val temperament: String?,
   val lifeSpan: String?,
   val altNames: String?,

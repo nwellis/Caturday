@@ -12,10 +12,10 @@ class CatBreedViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
   LayoutInflater.from(parent.context).inflate(R.layout.cat_breed_item, parent, false)
 ) {
   private val headerView = itemView.findViewById<TextView>(R.id.v_header)
-  private val breedsView = itemView.findViewById<TextView>(R.id.v_origin)
+  private val breedsView = itemView.findViewById<TextView>(R.id.v_temperament)
 
   fun bindTo(breed: CatBreed?) {
     headerView.text = breed?.name
-    breedsView.text = breed?.origin
+    breedsView.text = breed?.temperament
   }
 }
