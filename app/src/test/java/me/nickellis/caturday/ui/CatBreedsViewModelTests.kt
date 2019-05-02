@@ -67,8 +67,6 @@ class CatBreedsViewModelTests {
     `when`(mockCatRepository.getCatBreeds(anyKClass()))
       .thenReturn(mockPages[0].wrapWithMockRequest())
 
-    val query = CatBreedsQuery(pageSize = pageSize)
-
     val imagesObserver = mock<Observer<PagedList<CatBreed>>>()
     val networkObserver = mock<Observer<DataSourceState>>()
 
@@ -93,8 +91,6 @@ class CatBreedsViewModelTests {
 
     `when`(mockCatRepository.getCatBreeds(anyKClass()))
       .thenReturn(error.wrapErrorWithMockRequest())
-
-    val query = CatBreedsQuery(pageSize = pageSize)
 
     val imagesObserver = mock<Observer<PagedList<CatBreed>>>()
     val networkObserver = mock<Observer<DataSourceState>>()
