@@ -1,6 +1,7 @@
 package me.nickellis.caturday.ui.breeds
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import kotlinx.android.synthetic.main.breed_detail_fragment.*
 import me.nickellis.caturday.R
 import me.nickellis.caturday.domain.CatBreed
 import me.nickellis.caturday.injector
+import me.nickellis.caturday.ktx.startWebIntent
 import me.nickellis.caturday.ktx.visible
 import me.nickellis.caturday.ui.BaseFragment
 
@@ -51,7 +53,9 @@ class BreedDetailFragment : BaseFragment() {
       v_wikipedia_button.visible(blankToNullWikiUrl != null)
       blankToNullWikiUrl?.let { url ->
         v_wikipedia_button.setOnClickListener {
-
+          activity?.startWebIntent(url) { ex ->
+            Log.e(TAG, "Unable to start web intent for $url")
+          }
         }
       }
 
