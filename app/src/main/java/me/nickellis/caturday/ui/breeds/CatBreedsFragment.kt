@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.cat_images_fragment.*
 
 import me.nickellis.caturday.R
 import me.nickellis.caturday.injector
+import me.nickellis.caturday.ktx.visible
 import me.nickellis.caturday.ui.BaseFragment
 import me.nickellis.caturday.ui.common.events.NewBreedDetail
 import me.nickellis.caturday.ui.common.list.BreedSelected
@@ -68,6 +69,7 @@ class CatBreedsFragment : BaseFragment() {
   }
 
   private val networkObserver = Observer<DataSourceState> { state ->
+    v_progress_indicator.visible(state is DataSourceState.LoadInitial)
     when (state) {
       is DataSourceState.LoadInitial, is DataSourceState.LoadAfter -> Log.d(TAG, "Loading!")
       is DataSourceState.Success -> Log.d(TAG, "Success!")
