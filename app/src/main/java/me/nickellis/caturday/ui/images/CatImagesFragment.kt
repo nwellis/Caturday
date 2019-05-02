@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.cat_images_fragment.*
+import kotlinx.android.synthetic.main.try_again_widget.*
 
 import me.nickellis.caturday.R
 import me.nickellis.caturday.injector
@@ -61,10 +62,15 @@ class CatImagesFragment : BaseFragment() {
     viewModel.networkState.observe(this, networkObserver)
 
     viewModel.setQuery(CatImagesQuery(imageSize = CatImageSize.Small, pageSize = 50))
+
+    v_try_again_button.setOnClickListener {
+      viewModel.retryFailedCall()
+    }
   }
 
   private val networkObserver = Observer<DataSourceState> { state ->
     v_progress_indicator.visible(state is DataSourceState.LoadInitial)
+    v_try_again.visible(state is DataSourceState.Error)
     when (state) {
       is DataSourceState.LoadInitial, is DataSourceState.LoadAfter -> Log.d(TAG, "Loading!")
       is DataSourceState.Success -> Log.d(TAG, "Success!")

@@ -20,7 +20,7 @@ class CatImagesDataFactory(
   private var query: CatImagesQuery = CatImagesQuery(page = 0, pageSize = 10)
 
   val mutableLiveData: MutableLiveData<CatImagesDataSource> = MutableLiveData()
-  private val source: CatImagesDataSource? = mutableLiveData.value
+  private val source: CatImagesDataSource? get() = mutableLiveData.value
 
   override fun create(): DataSource<CatImagesQuery, CatImage> {
     return CatImagesDataSource(repository, query, executor).apply {

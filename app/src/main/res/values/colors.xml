@@ -17,5 +17,11 @@
     <color name="lightText">#F5FBEF</color>
     <color name="lightText2">#C9C4C5</color>
     <color name="darkText">#090B0C</color>
-    <!--Too blue? <color name="darkBackground">#1B1F3B</color>-->
+
+    <color name="black12a">#1F000000</color>
+    <color name="black26a">#42000000</color>
+    <color name="black54a">#8A000000</color>
+    <color name="black87a">#DE000000</color>
+    <color name="black">#000000</color>
+
 </resources>
