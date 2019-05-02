@@ -1,5 +1,6 @@
 package me.nickellis.caturday.repo
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import me.nickellis.caturday.repo.cat.ApiCatRepository
@@ -18,9 +19,10 @@ class RepositoryModule {
   @Singleton @Provides
   fun catRepository(
     @Named(ServiceModule.CatErrorConverter) errorHandler: ErrorHandler<Response<*>>,
-    catService: CatService
+    catService: CatService,
+    context: Context
   ): CatRepository {
-    return ApiCatRepository(errorHandler, catService)
+    return ApiCatRepository(errorHandler, catService, context)
   }
 
 }

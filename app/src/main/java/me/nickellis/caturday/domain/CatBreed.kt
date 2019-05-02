@@ -11,11 +11,6 @@ data class CatBreed(
   val wikipediaUrl: String?,
   val origin: String?,
   val weightImperial: String?,
-  val experimental: Boolean,
-  val hairless: Boolean,
-  val hypoallergenic: Boolean,
-  val rare: Boolean,
-  val rex: Boolean,
-  val shortLegs: Boolean,
-  val suppressedTail: Boolean
+  val catTraits: List<HasCatTrait>,
+  val catTraitRatings: List<CatTraitRating>
 )

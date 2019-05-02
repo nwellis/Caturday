@@ -1,6 +1,7 @@
 package me.nickellis.caturday.repo.cat
 
 
+import android.content.Context
 import me.nickellis.caturday.domain.CatBreed
 import me.nickellis.caturday.domain.CatImage
 import me.nickellis.caturday.repo.RepositoryRequest
@@ -37,7 +38,8 @@ interface CatRepository {
 
 class ApiCatRepository(
   private val errorHandler: ErrorHandler<Response<*>>,
-  private val catService: CatService
+  private val catService: CatService,
+  private val context: Context
 ): CatRepository {
 
   override fun getRandomCatImages(query: CatImagesQuery): RepositoryRequest<List<CatImage>> {
@@ -55,7 +57,7 @@ class ApiCatRepository(
       .getRandomCatImages(size = size, page = query.page, limit = pageSize)
       .asRepositoryRequest(
         errorHandler = errorHandler,
-        mapper = { apiCatImages -> apiCatImages.map { it.toCatImage() } }
+        mapper = { apiCatImages -> apiCatImages.map { it.toCatImage(context.resources) } }
       )
   }
 
@@ -64,7 +66,7 @@ class ApiCatRepository(
       .getCatImage(imageId)
       .asRepositoryRequest(
         errorHandler = errorHandler,
-        mapper = { apiCatImageDetail -> apiCatImageDetail.toCatImage() }
+        mapper = { apiCatImageDetail -> apiCatImageDetail.toCatImage(context.resources) }
       )
   }
 
@@ -73,7 +75,7 @@ class ApiCatRepository(
       .getCatBreeds(1, page = query.page, limit = query.pageSize)
       .asRepositoryRequest(
         errorHandler = errorHandler,
-        mapper = { apiCatBreeds -> apiCatBreeds.map { it.toCatBreed() } }
+        mapper = { apiCatBreeds -> apiCatBreeds.map { it.toCatBreed(context.resources) } }
       )
   }
 }
