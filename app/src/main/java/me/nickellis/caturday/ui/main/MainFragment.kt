@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_main.*
 
 import me.nickellis.caturday.R
+import me.nickellis.caturday.ktx.isPortrait
 import me.nickellis.caturday.ui.breeds.CatBreedsFragment
 import me.nickellis.caturday.ui.images.CatImagesFragment
 
@@ -29,7 +30,12 @@ class MainFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    v_tab_layout.setupWithViewPager(v_view_pager)
+    v_tab_layout.apply {
+      setupWithViewPager(v_view_pager)
+      tabMode =
+          if (resources.isPortrait) TabLayout.MODE_FIXED
+          else TabLayout.MODE_SCROLLABLE
+    }
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
