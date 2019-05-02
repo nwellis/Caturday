@@ -50,15 +50,17 @@ class BreedDetailFragment : BaseFragment() {
       v_description.text = description
 
       val blankToNullWikiUrl = wikipediaUrl?.takeIf { it.isNotBlank() }
-      v_wikipedia_button.visible(blankToNullWikiUrl != null)
-      blankToNullWikiUrl?.let { url ->
-        v_wikipedia_button.setOnClickListener {
-          activity?.startWebIntent(url) { ex ->
-            Log.e(TAG, "Unable to start web intent for $url")
+
+      v_wikipedia_button.apply {
+        visible(blankToNullWikiUrl != null)
+        blankToNullWikiUrl?.let { url ->
+          setOnClickListener {
+            activity?.startWebIntent(url) { ex ->
+              Log.e(TAG, "Unable to start web intent for $url")
+            }
           }
         }
       }
-
     }
   }
 
