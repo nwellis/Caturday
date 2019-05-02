@@ -24,6 +24,7 @@ class CatBreedsViewModel @Inject constructor(
 
   val _query = MutableLiveData<CatBreedsQuery>()
   val query = _query as LiveData<CatBreedsQuery>
+
   val catBreeds: LiveData<PagedList<CatBreed>>
   val networkState: LiveData<DataSourceState>
 

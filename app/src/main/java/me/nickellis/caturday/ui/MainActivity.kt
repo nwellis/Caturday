@@ -14,6 +14,7 @@ import me.nickellis.caturday.ui.common.events.FragmentObserver
 import me.nickellis.caturday.ui.common.events.NewBreedDetail
 import me.nickellis.caturday.ui.common.navigation.FragmentStack
 import me.nickellis.caturday.ui.images.CatImagesFragment
+import me.nickellis.caturday.ui.main.MainFragment
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), SharedViewModelProvider, FragmentObserver {
@@ -37,7 +38,7 @@ class MainActivity : BaseActivity(), SharedViewModelProvider, FragmentObserver {
     )
 
     if (navigation.isEmpty) {
-      navigation.push(CatBreedsFragment.newInstance())
+      navigation.push(MainFragment.newInstance())
     }
   }
 

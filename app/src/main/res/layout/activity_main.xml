@@ -6,37 +6,9 @@
   android:layout_height="match_parent"
   android:orientation="vertical"
   android:background="@color/darkBlueBackground">
-  <com.google.android.material.tabs.TabLayout
+  <LinearLayout
+    android:id="@+id/v_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-    app:tabIndicatorColor="@color/lightText"
-    app:tabSelectedTextColor="@color/lightText"
-    app:tabTextColor="@color/lightText2">
-    <com.google.android.material.tabs.TabItem
-      android:id="@+id/v_images_button"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/btn_images"
-      style="@style/AppButton"/>
-    <com.google.android.material.tabs.TabItem
-      android:id="@+id/v_breeds_button"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/btn_breeds"
-      style="@style/AppButton"/>
-  </com.google.android.material.tabs.TabLayout>
-  <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_weight="1"
-    android:layout_height="0dp"
-    android:foreground="@drawable/shadow_bot_drop"
-    android:foregroundGravity="top|fill_horizontal">
-    <LinearLayout
-      android:id="@+id/v_container"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/lightBackground"
-      android:orientation="vertical"/>
-  </FrameLayout>
+    android:layout_height="match_parent"
+    android:orientation="vertical"/>
 </LinearLayout>

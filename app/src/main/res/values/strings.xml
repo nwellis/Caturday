@@ -13,7 +13,7 @@
     interaction and woe betide the owner who doesn\'t provide it.
   </string>
   <string name="placholder_bengal_traits">Alert, Agile, Energetic, Demanding, Intelligent</string>
-  
+
   <!-- The API doesn't give us the labels to data in a lot of cases, I add them through mappings with these -->
   <string name="api_life_span">Life Span</string>
   <string name="api_indoor">Indoor</string>
@@ -39,5 +39,8 @@
   <string name="api_suppressed_tail">Suppressed Tail</string>
   <string name="api_short_legs">Short Legs</string>
   <string name="api_hypoallergenic">Hypoallergenic</string>
+
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
