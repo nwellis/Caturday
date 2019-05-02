@@ -14,6 +14,10 @@
   </string>
   <string name="placholder_bengal_traits">Alert, Agile, Energetic, Demanding, Intelligent</string>
 
+  <!-- Font Awesome Icons, before using, add attribution -->
+  <string name="i_solid_cat">\uf6be</string>
+  <string name="i_solid_paw">\uf1b0</string>
+
   <!-- The API doesn't give us the labels to data in a lot of cases, I add them through mappings with these -->
   <string name="api_life_span">Life Span</string>
   <string name="api_indoor">Indoor</string>
