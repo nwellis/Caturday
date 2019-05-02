@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.cat_images_fragment.*
 
@@ -46,7 +47,8 @@ class CatImagesFragment : BaseFragment() {
     imagesAdapter = CatImagesPagedAdapter()
     v_recycler.apply {
       adapter = imagesAdapter
-      layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+      //layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL) If I knew the image size ahead of time I could do this easily
+      layoutManager = GridLayoutManager(context, 2)
     }
   }
 
