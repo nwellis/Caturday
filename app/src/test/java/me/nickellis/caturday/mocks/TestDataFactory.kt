@@ -22,19 +22,15 @@ object TestDataFactory {
     id = uniqueString,
     referenceImageId = uniqueString,
     name = uniqueString,
+    description = uniqueString,
     temperament = uniqueString,
     lifeSpan = uniqueString,
     altNames = uniqueString,
     wikipediaUrl = uniqueString,
     origin = uniqueString,
     weightImperial = uniqueString,
-    experimental = uniqueBoolean,
-    hairless = uniqueBoolean,
-    hypoallergenic = uniqueBoolean,
-    rare = uniqueBoolean,
-    rex = uniqueBoolean,
-    shortLegs = uniqueBoolean,
-    suppressedTail = uniqueBoolean
+    catTraits = emptyList(),
+    catTraitRatings = emptyList()
   )
 
 }

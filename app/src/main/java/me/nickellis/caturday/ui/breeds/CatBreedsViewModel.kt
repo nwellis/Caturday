@@ -49,9 +49,6 @@ class CatBreedsViewModel @Inject constructor(
         factory.setQuery(newQuery)
       }
     }
-
-    val breedQuery = _query.value ?: CatBreedsQuery()
-    factory.setQuery(breedQuery)
     return this
   }
 
