@@ -1,6 +1,5 @@
 package me.nickellis.caturday.ui.breeds
 
-import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -9,14 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.cat_images_fragment.*
 
 import me.nickellis.caturday.R
 import me.nickellis.caturday.injector
-import me.nickellis.caturday.repo.cat.CatBreedsQuery
 import me.nickellis.caturday.ui.BaseFragment
-import me.nickellis.caturday.ui.common.events.FragmentObserver
 import me.nickellis.caturday.ui.common.events.NewBreedDetail
 import me.nickellis.caturday.ui.common.list.BreedSelected
 import me.nickellis.caturday.ui.common.list.CatBreedsPagedAdapter

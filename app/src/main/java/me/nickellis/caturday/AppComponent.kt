@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import androidx.fragment.app.Fragment
 import dagger.Component
-import me.nickellis.caturday.repo.RepositoryModule
-import me.nickellis.caturday.repo.cat.CatRepository
+import me.nickellis.caturday.repository.RepositoryModule
+import me.nickellis.caturday.repository.cat.CatRepository
 import me.nickellis.caturday.ui.BaseActivity
 import me.nickellis.caturday.ui.BaseFragment
 import me.nickellis.caturday.ui.MainActivity

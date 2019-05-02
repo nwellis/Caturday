@@ -12,8 +12,8 @@ import kotlinx.android.synthetic.main.cat_images_fragment.*
 
 import me.nickellis.caturday.R
 import me.nickellis.caturday.injector
-import me.nickellis.caturday.repo.cat.CatImageSize
-import me.nickellis.caturday.repo.cat.CatImagesQuery
+import me.nickellis.caturday.repository.cat.CatImageSize
+import me.nickellis.caturday.repository.cat.CatImagesQuery
 import me.nickellis.caturday.ui.BaseFragment
 import me.nickellis.caturday.ui.common.list.CatImagesPagedAdapter
 import me.nickellis.caturday.ui.common.state.DataSourceState

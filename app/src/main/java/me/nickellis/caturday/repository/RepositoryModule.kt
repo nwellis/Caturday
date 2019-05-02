@@ -1,10 +1,10 @@
-package me.nickellis.caturday.repo
+package me.nickellis.caturday.repository
 
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import me.nickellis.caturday.repo.cat.ApiCatRepository
-import me.nickellis.caturday.repo.cat.CatRepository
+import me.nickellis.caturday.repository.cat.ApiCatRepository
+import me.nickellis.caturday.repository.cat.CatRepository
 import me.nickellis.caturday.service.ErrorHandler
 import me.nickellis.caturday.service.ServiceModule
 import me.nickellis.caturday.service.cat.CatService

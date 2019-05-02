@@ -9,9 +9,9 @@ import me.nickellis.caturday.domain.CatImage
 import me.nickellis.caturday.domain.common.AppError
 import me.nickellis.caturday.ktx.*
 import me.nickellis.caturday.mocks.TestDataFactory
-import me.nickellis.caturday.repo.cat.CatImagesDataFactory
-import me.nickellis.caturday.repo.cat.CatImagesQuery
-import me.nickellis.caturday.repo.cat.CatRepository
+import me.nickellis.caturday.repository.cat.CatImagesDataFactory
+import me.nickellis.caturday.repository.cat.CatImagesQuery
+import me.nickellis.caturday.repository.cat.CatRepository
 import me.nickellis.caturday.ui.common.state.DataSourceState
 import me.nickellis.caturday.ui.images.CatImagesViewModel
 import org.junit.Before

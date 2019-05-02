@@ -1,4 +1,4 @@
-package me.nickellis.caturday.repo.cat
+package me.nickellis.caturday.repository.cat
 
 import android.content.res.Resources
 import me.nickellis.caturday.R

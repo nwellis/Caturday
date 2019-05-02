@@ -2,7 +2,7 @@ package me.nickellis.caturday.mocks
 
 import androidx.lifecycle.Lifecycle
 import me.nickellis.caturday.domain.common.AppError
-import me.nickellis.caturday.repo.*
+import me.nickellis.caturday.repository.*
 
 val NeedsResultOrErrorException = IllegalArgumentException("Supply the mock request with either a result or error, " +
     "both can't be null")

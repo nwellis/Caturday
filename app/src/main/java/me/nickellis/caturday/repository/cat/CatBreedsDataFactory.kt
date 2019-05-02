@@ -1,4 +1,4 @@
-package me.nickellis.caturday.repo.cat
+package me.nickellis.caturday.repository.cat
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
@@ -7,7 +7,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.runBlocking
 import me.nickellis.caturday.domain.CatBreed
 import me.nickellis.caturday.domain.common.AppError
-import me.nickellis.caturday.repo.RepositoryRequest
+import me.nickellis.caturday.repository.RepositoryRequest
 import me.nickellis.caturday.ui.common.state.DataSourceState
 import java.util.concurrent.Executor
 

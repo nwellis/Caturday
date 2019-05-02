@@ -3,11 +3,9 @@ package me.nickellis.caturday.ktx
 import androidx.paging.PagedList
 import me.nickellis.caturday.domain.common.AppError
 import me.nickellis.caturday.mocks.MockRepositoryRequest
-import me.nickellis.caturday.repo.RepositoryRequest
+import me.nickellis.caturday.repository.RepositoryRequest
 import org.mockito.ArgumentMatchers
-import org.mockito.Mockito
 import org.mockito.Mockito.*
-import java.util.*
 
 inline fun <reified T> mock(): T = mock(T::class.java)
 
