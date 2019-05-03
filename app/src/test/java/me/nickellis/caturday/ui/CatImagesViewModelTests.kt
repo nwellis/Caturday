@@ -47,7 +47,7 @@ class CatImagesViewModelTests {
   }
 
   @Test
-  fun `same query executes only once`() {
+  fun `same query does not execute again`() {
     // Arrange
     val query = CatImagesQuery(imageSize = CatImageSize.Medium)
     viewModel.setDataFactory(mockDataFactory, query)
