@@ -17,7 +17,8 @@ class CatImagesDataFactory(
   private val executor: Executor
 ): DataSource.Factory<CatImagesQuery, CatImage>() {
 
-  private var query: CatImagesQuery = CatImagesQuery(page = 0, pageSize = 10)
+  var query: CatImagesQuery = CatImagesQuery()
+    private set
 
   val mutableLiveData: MutableLiveData<CatImagesDataSource> = MutableLiveData()
   private val source: CatImagesDataSource? get() = mutableLiveData.value

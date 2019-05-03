@@ -9,6 +9,7 @@ import me.nickellis.caturday.domain.CatImage
 import me.nickellis.caturday.domain.common.AppError
 import me.nickellis.caturday.ktx.*
 import me.nickellis.caturday.mocks.TestDataFactory
+import me.nickellis.caturday.repository.cat.CatImageSize
 import me.nickellis.caturday.repository.cat.CatImagesDataFactory
 import me.nickellis.caturday.repository.cat.CatImagesQuery
 import me.nickellis.caturday.repository.cat.CatRepository
@@ -23,7 +24,6 @@ import org.mockito.Mockito.*
 import org.mockito.internal.util.reflection.FieldSetter
 import org.mockito.junit.MockitoJUnitRunner
 
-
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class CatImagesViewModelTests {
@@ -33,9 +33,7 @@ class CatImagesViewModelTests {
 
   private val pageSize = 25
   private val mockData = (0 until 1000).map { id -> TestDataFactory.newCatImage(id.toString()) }
-  private val mockPages = (0 until mockData.size step pageSize).map { cursor ->
-    mockData.subList(cursor, cursor + pageSize)
-  }
+  private val mockPages = mockData.chunked(pageSize)
 
   @Mock private lateinit var mockCatRepository: CatRepository
   @Mock private lateinit var mockDataFactory: CatImagesDataFactory
@@ -51,16 +49,14 @@ class CatImagesViewModelTests {
   @Test
   fun `same query executes only once`() {
     // Arrange
-    viewModel.setDataFactory(mockDataFactory)
-
-    val query = CatImagesQuery(pageSize = pageSize)
+    val query = CatImagesQuery(imageSize = CatImageSize.Medium)
+    viewModel.setDataFactory(mockDataFactory, query)
 
     // Act
-    viewModel.setQuery(query)
-    viewModel.setQuery(query)
+    viewModel.setQuery(query) // shouldn't invoke setQuery
 
     // Assert
-    verify(mockDataFactory, times(1)).setQuery(anyKClass())
+    verify(mockDataFactory, times(0)).setQuery(anyKClass())
   }
 
   @Test
@@ -69,7 +65,7 @@ class CatImagesViewModelTests {
     `when`(mockCatRepository.getRandomCatImages(anyKClass()))
       .thenReturn(mockPages[0].wrapWithMockRequest())
 
-    val query = CatImagesQuery(pageSize = pageSize)
+    val query = CatImagesQuery(imageSize = CatImageSize.Max)
 
     val imagesObserver = mock<Observer<PagedList<CatImage>>>()
     val networkObserver = mock<Observer<DataSourceState>>()
@@ -83,9 +79,11 @@ class CatImagesViewModelTests {
     viewModel.setQuery(query)
 
     // Assert
-    verify(mockCatRepository, times(1)).getRandomCatImages(anyKClass())
-    verify(imagesObserver, times(1)).onChanged(anyKClass())
-    verify(networkObserver, times(1)).onChanged(DataSourceState.Success)
+
+    // Twice, once for initial factory instantiation and another for changing the query
+    verify(mockCatRepository, times(2)).getRandomCatImages(anyKClass())
+    verify(imagesObserver, times(2)).onChanged(anyKClass())
+    verify(networkObserver, times(2)).onChanged(DataSourceState.Success)
   }
 
   @Test
@@ -96,7 +94,7 @@ class CatImagesViewModelTests {
     `when`(mockCatRepository.getRandomCatImages(anyKClass()))
       .thenReturn(error.wrapErrorWithMockRequest())
 
-    val query = CatImagesQuery(pageSize = pageSize)
+    val query = CatImagesQuery(imageSize = CatImageSize.Max)
 
     val imagesObserver = mock<Observer<PagedList<CatImage>>>()
     val networkObserver = mock<Observer<DataSourceState>>()
@@ -110,12 +108,15 @@ class CatImagesViewModelTests {
     viewModel.setQuery(query)
 
     // Assert
-    verify(mockCatRepository, times(1)).getRandomCatImages(anyKClass())
-    verify(imagesObserver, times(1)).onChanged(anyKClass())
-    verify(networkObserver, times(1)).onChanged(DataSourceState.Error(error))
+
+    // Twice, once for initial factory instantiation and another for changing the query
+    verify(mockCatRepository, times(2)).getRandomCatImages(anyKClass())
+    verify(imagesObserver, times(2)).onChanged(anyKClass())
+    verify(networkObserver, times(2)).onChanged(DataSourceState.Error(error))
   }
 
-  private fun CatImagesViewModel.setDataFactory(factory: CatImagesDataFactory) {
+  private fun CatImagesViewModel.setDataFactory(factory: CatImagesDataFactory, factoryQuery: CatImagesQuery) {
     FieldSetter.setField(this, javaClass.getDeclaredField("factory"), factory)
+    `when`(factory.query).thenReturn(factoryQuery)
   }
 }
