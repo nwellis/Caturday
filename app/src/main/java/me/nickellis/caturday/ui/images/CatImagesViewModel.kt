@@ -40,6 +40,10 @@ class CatImagesViewModel @Inject constructor(
       .switchMap(factory.mutableLiveData) { data -> data.networkState }
   }
 
+  /**
+   * Update the cat images query. The paging arguments are ignored in favor of the paged list config, so the
+   * only parameter that does anything is the [CatImagesQuery.imageSize] parameter.
+   */
   fun setQuery(query: CatImagesQuery): CatImagesViewModel {
     if (query != factory.query) {
       factory.setQuery(query)

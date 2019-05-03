@@ -39,6 +39,10 @@ class CatBreedsViewModel @Inject constructor(
       .switchMap(factory.mutableLiveData) { data -> data.networkState }
   }
 
+  /**
+   * Update the cat breed query. Since page and pageSize is ignored in favor of paged list config, this
+   * actually doesn't do anything but I'll leave it for future functionality.
+   */
   fun getCatBreeds(query: CatBreedsQuery): CatBreedsViewModel {
     if (query != factory.query) {
       factory.setQuery(query)
