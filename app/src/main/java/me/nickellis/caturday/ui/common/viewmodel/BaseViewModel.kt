@@ -18,7 +18,7 @@ import kotlin.coroutines.CoroutineContext
  *
  * @constructor Constructs the base implementation of a view model.
  */
-abstract class BaseViewModel(private val appExecutors: AppExecutors): ViewModel(), CoroutineScope {
+abstract class BaseViewModel(protected val appExecutors: AppExecutors): ViewModel(), CoroutineScope {
 
   companion object {
     const val TAG = "BaseViewModel"
