@@ -40,7 +40,7 @@ class BreedDetailFragment : BaseFragment() {
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
-    sharedViewModel.selectedBreed.observe(this, breedObserver)
+    sharedViewModel.selectedBreed.observe(viewLifecycleOwner, breedObserver)
   }
 
   private val breedObserver = Observer<CatBreed> { breed ->

@@ -58,8 +58,8 @@ class CatImagesFragment : BaseFragment() {
     super.onActivityCreated(savedInstanceState)
     viewModel = ViewModelProviders.of(this, viewModelFactory).get(CatImagesViewModel::class.java)
 
-    viewModel.catImages.observe(this, Observer(imagesAdapter::submitList))
-    viewModel.networkState.observe(this, networkObserver)
+    viewModel.catImages.observe(viewLifecycleOwner, Observer(imagesAdapter::submitList))
+    viewModel.networkState.observe(viewLifecycleOwner, networkObserver)
 
     viewModel.setQuery(CatImagesQuery(imageSize = CatImageSize.Small))
 

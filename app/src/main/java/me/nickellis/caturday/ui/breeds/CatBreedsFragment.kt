@@ -64,8 +64,8 @@ class CatBreedsFragment : BaseFragment() {
 
     viewModel = ViewModelProviders.of(this, viewModelFactory).get(CatBreedsViewModel::class.java)
 
-    viewModel.catBreeds.observe(this, Observer(breedsAdapter::submitList))
-    viewModel.networkState.observe(this, networkObserver)
+    viewModel.catBreeds.observe(viewLifecycleOwner, Observer(breedsAdapter::submitList))
+    viewModel.networkState.observe(viewLifecycleOwner, networkObserver)
 
     viewModel.getCatBreeds(CatBreedsQuery())
 
