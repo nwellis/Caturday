@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.try_again_widget.*
 import me.nickellis.caturday.R
 import me.nickellis.caturday.injector
 import me.nickellis.caturday.ktx.visible
+import me.nickellis.caturday.repository.cat.CatBreedsQuery
 import me.nickellis.caturday.ui.BaseFragment
 import me.nickellis.caturday.ui.common.events.NewBreedDetail
 import me.nickellis.caturday.ui.common.list.BreedSelected
@@ -66,7 +67,7 @@ class CatBreedsFragment : BaseFragment() {
     viewModel.catBreeds.observe(this, Observer(breedsAdapter::submitList))
     viewModel.networkState.observe(this, networkObserver)
 
-    viewModel.getCatBreeds()
+    viewModel.getCatBreeds(CatBreedsQuery())
 
     v_try_again_button.setOnClickListener {
       viewModel.retryFailedCall()

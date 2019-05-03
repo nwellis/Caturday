@@ -61,7 +61,7 @@ class CatImagesFragment : BaseFragment() {
     viewModel.catImages.observe(this, Observer(imagesAdapter::submitList))
     viewModel.networkState.observe(this, networkObserver)
 
-    viewModel.setQuery(CatImagesQuery(imageSize = CatImageSize.Small, pageSize = 50))
+    viewModel.setQuery(CatImagesQuery(imageSize = CatImageSize.Small))
 
     v_try_again_button.setOnClickListener {
       viewModel.retryFailedCall()

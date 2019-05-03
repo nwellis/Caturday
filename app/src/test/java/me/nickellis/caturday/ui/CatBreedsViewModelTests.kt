@@ -47,21 +47,23 @@ class CatBreedsViewModelTests {
   }
 
   @Test
-  fun `same query executes only once`() {
+  fun `same query does not execute again`() {
     // Arrange
-    viewModel.setDataFactory(mockDataFactory)
+    val query = CatBreedsQuery()
+    viewModel.setDataFactory(mockDataFactory, query)
 
     // Act
-    viewModel.getCatBreeds()
-    viewModel.getCatBreeds()
+    viewModel.getCatBreeds(query)
 
     // Assert
-    verify(mockDataFactory, times(1)).setQuery(anyKClass())
+    verify(mockDataFactory, times(0)).setQuery(anyKClass())
   }
 
   @Test
   fun `get cat images success`() {
     // Arrange
+    val query = CatBreedsQuery(pageSize = 25)
+
     `when`(mockCatRepository.getCatBreeds(anyKClass()))
       .thenReturn(mockPages[0].wrapWithMockRequest())
 
@@ -74,18 +76,21 @@ class CatBreedsViewModelTests {
     }
 
     // Act
-    viewModel.getCatBreeds()
+    viewModel.getCatBreeds(query)
 
     // Assert
-    verify(mockCatRepository, times(1)).getCatBreeds(anyKClass())
-    verify(imagesObserver, times(1)).onChanged(anyKClass())
-    verify(networkObserver, times(1)).onChanged(DataSourceState.Success)
+
+    // Twice, once for initial factory instantiation and another for changing the query
+    verify(mockCatRepository, times(2)).getCatBreeds(anyKClass())
+    verify(imagesObserver, times(2)).onChanged(anyKClass())
+    verify(networkObserver, times(2)).onChanged(DataSourceState.Success)
   }
 
   @Test
   fun `get cat images error`() {
     // Arrange
     val error = AppError(message = "mock error")
+    val query = CatBreedsQuery(pageSize = 25)
 
     `when`(mockCatRepository.getCatBreeds(anyKClass()))
       .thenReturn(error.wrapErrorWithMockRequest())
@@ -99,15 +104,18 @@ class CatBreedsViewModelTests {
     }
 
     // Act
-    viewModel.getCatBreeds()
+    viewModel.getCatBreeds(query)
 
     // Assert
-    verify(mockCatRepository, times(1)).getCatBreeds(anyKClass())
-    verify(imagesObserver, times(1)).onChanged(anyKClass())
-    verify(networkObserver, times(1)).onChanged(DataSourceState.Error(error))
+
+    // Twice, once for initial factory instantiation and another for changing the query
+    verify(mockCatRepository, times(2)).getCatBreeds(anyKClass())
+    verify(imagesObserver, times(2)).onChanged(anyKClass())
+    verify(networkObserver, times(2)).onChanged(DataSourceState.Error(error))
   }
 
-  private fun CatBreedsViewModel.setDataFactory(factory: CatBreedsDataFactory) {
+  private fun CatBreedsViewModel.setDataFactory(factory: CatBreedsDataFactory, factoryQuery: CatBreedsQuery) {
     FieldSetter.setField(this, javaClass.getDeclaredField("factory"), factory)
+    `when`(factory.query).thenReturn(factoryQuery)
   }
 }

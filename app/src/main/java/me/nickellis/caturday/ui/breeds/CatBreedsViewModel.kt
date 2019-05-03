@@ -22,9 +22,6 @@ class CatBreedsViewModel @Inject constructor(
 
   private val factory: CatBreedsDataFactory = CatBreedsDataFactory(catRepository, appExecutors.networkIO)
 
-  val _query = MutableLiveData<CatBreedsQuery>()
-  val query = _query as LiveData<CatBreedsQuery>
-
   val catBreeds: LiveData<PagedList<CatBreed>>
   val networkState: LiveData<DataSourceState>
 
@@ -42,12 +39,9 @@ class CatBreedsViewModel @Inject constructor(
       .switchMap(factory.mutableLiveData) { data -> data.networkState }
   }
 
-  fun getCatBreeds(): CatBreedsViewModel {
-    if (_query.value == null) {
-      CatBreedsQuery().let { newQuery ->
-        _query.postValue(newQuery)
-        factory.setQuery(newQuery)
-      }
+  fun getCatBreeds(query: CatBreedsQuery): CatBreedsViewModel {
+    if (query != factory.query) {
+      factory.setQuery(query)
     }
     return this
   }

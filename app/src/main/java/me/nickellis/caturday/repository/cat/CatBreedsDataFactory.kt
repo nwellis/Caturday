@@ -17,7 +17,8 @@ class CatBreedsDataFactory(
   private val executor: Executor
 ): DataSource.Factory<CatBreedsQuery, CatBreed>() {
 
-  private var query: CatBreedsQuery = CatBreedsQuery(page = 0, pageSize = 10)
+  var query: CatBreedsQuery = CatBreedsQuery()
+    private set
 
   val mutableLiveData: MutableLiveData<CatBreedsDataSource> = MutableLiveData()
   private val source: CatBreedsDataSource? get() = mutableLiveData.value
@@ -47,7 +48,6 @@ class CatBreedsDataSource(
   private var inflightRequest: RepositoryRequest<List<CatBreed>>? = null
 
   val networkState = MutableLiveData<DataSourceState>()
-  var initialLoadSize = 0
 
   fun retryFailedCall() {
     retry
@@ -60,7 +60,6 @@ class CatBreedsDataSource(
     callback: LoadInitialCallback<CatBreedsQuery, CatBreed>
   ) {
     networkState.postValue(DataSourceState.LoadInitial)
-    initialLoadSize = params.requestedLoadSize
 
     try {
       val key = query.copy(page = 0, pageSize = params.requestedLoadSize)
@@ -84,7 +83,6 @@ class CatBreedsDataSource(
 
   override fun loadAfter(params: LoadParams<CatBreedsQuery>, callback: LoadCallback<CatBreedsQuery, CatBreed>) {
     networkState.postValue(DataSourceState.LoadAfter)
-    initialLoadSize = params.requestedLoadSize
 
     try {
       /**
