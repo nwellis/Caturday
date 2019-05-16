@@ -18,6 +18,5 @@ class CatImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
 
   fun bindTo(image: CatImage?) {
     imageView.loadImageFromWeb(image?.url)
-    //headerView.text = image?.url
   }
 }

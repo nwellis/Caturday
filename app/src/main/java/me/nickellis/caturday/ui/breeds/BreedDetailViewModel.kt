@@ -11,7 +11,6 @@ import kotlinx.coroutines.withContext
 import me.nickellis.caturday.AppExecutors
 import me.nickellis.caturday.R
 import me.nickellis.caturday.domain.common.AppError
-import me.nickellis.caturday.repository.cat.CatBreedsQuery
 import me.nickellis.caturday.repository.cat.CatImageSize
 import me.nickellis.caturday.repository.cat.CatImagesQuery
 import me.nickellis.caturday.repository.cat.CatRepository
