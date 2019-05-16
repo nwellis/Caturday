@@ -1,6 +1,9 @@
 package me.nickellis.caturday.domain
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class CatBreed(
   val id: String,
   val referenceImageId: String?,
@@ -14,4 +17,4 @@ data class CatBreed(
   val weightImperial: String?,
   val catTraits: List<HasCatTrait>,
   val catTraitRatings: List<CatTraitRating>
-)
+): Parcelable
