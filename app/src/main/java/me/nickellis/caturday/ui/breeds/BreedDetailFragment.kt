@@ -57,7 +57,10 @@ class BreedDetailFragment : BaseFragment() {
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
-    viewModel = ViewModelProviders.of(this, viewModelFactory).get(BreedDetailViewModel::class.java)
+    viewModel = ViewModelProviders
+      .of(this, viewModelFactory)
+      .get(BreedDetailViewModel::class.java)
+      .also { managePersistenceOf(it) }
 
     if (viewModel.getBreed().value == null) {
       val catBreed = arguments?.getParcelable<CatBreed>(ARG_BREED)
