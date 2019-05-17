@@ -1,20 +1,16 @@
 package me.nickellis.caturday.ui.breeds
 
-import android.content.Context
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.cat_images_fragment.*
 import kotlinx.android.synthetic.main.try_again_widget.*
-
 import me.nickellis.caturday.R
-import me.nickellis.caturday.injector
 import me.nickellis.caturday.ktx.visible
 import me.nickellis.caturday.repository.cat.CatBreedsQuery
 import me.nickellis.caturday.ui.BaseFragment

@@ -18,10 +18,8 @@ package me.nickellis.caturday
 
 import android.os.Handler
 import android.os.Looper
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.withContext
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import javax.inject.Inject

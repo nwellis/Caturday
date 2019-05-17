@@ -8,10 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.breed_detail_fragment.*
-
 import me.nickellis.caturday.R
 import me.nickellis.caturday.domain.CatBreed
-import me.nickellis.caturday.injector
 import me.nickellis.caturday.ktx.startWebIntent
 import me.nickellis.caturday.ktx.visible
 import me.nickellis.caturday.ui.BaseFragment

@@ -2,7 +2,6 @@ package me.nickellis.caturday.ui.images
 
 import android.os.Bundle
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList

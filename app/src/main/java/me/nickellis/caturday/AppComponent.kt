@@ -6,11 +6,8 @@ import androidx.fragment.app.Fragment
 import dagger.Component
 import me.nickellis.caturday.repository.RepositoryModule
 import me.nickellis.caturday.repository.cat.CatRepository
-import me.nickellis.caturday.ui.BaseActivity
 import me.nickellis.caturday.ui.BaseFragment
-import me.nickellis.caturday.ui.MainActivity
 import me.nickellis.caturday.ui.common.viewmodel.ViewModelModule
-import me.nickellis.caturday.ui.images.CatImagesFragment
 import javax.inject.Singleton
 
 interface AppComponentProvider {

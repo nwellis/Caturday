@@ -2,7 +2,6 @@ package me.nickellis.caturday.ui
 
 import android.os.Bundle
 import me.nickellis.caturday.R
-import me.nickellis.caturday.injector
 import me.nickellis.caturday.ui.common.events.FragmentEvent
 import me.nickellis.caturday.ui.common.events.FragmentObserver
 import me.nickellis.caturday.ui.common.navigation.FragmentStack

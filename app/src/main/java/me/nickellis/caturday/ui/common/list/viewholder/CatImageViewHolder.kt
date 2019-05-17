@@ -3,7 +3,6 @@ package me.nickellis.caturday.ui.common.list.viewholder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import me.nickellis.caturday.R
 import me.nickellis.caturday.domain.CatImage
