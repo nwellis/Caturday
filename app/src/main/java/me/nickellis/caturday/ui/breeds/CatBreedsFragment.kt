@@ -1,7 +1,9 @@
 package me.nickellis.caturday.ui.breeds
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -76,6 +78,16 @@ class CatBreedsFragment : BaseFragment() {
     v_try_again_button.setOnClickListener {
       viewModel.retryFailedCall()
     }
+  }
+
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    viewModel.saveTo(outState)
+  }
+
+  override fun onViewStateRestored(savedInstanceState: Bundle?) {
+    super.onViewStateRestored(savedInstanceState)
+    viewModel.restoreFrom(savedInstanceState)
   }
 
   private val networkObserver = Observer<DataSourceState> { state ->
