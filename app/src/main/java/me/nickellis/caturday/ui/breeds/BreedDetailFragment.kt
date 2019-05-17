@@ -49,6 +49,7 @@ class BreedDetailFragment : BaseFragment() {
     viewModel = ViewModelProviders
       .of(this, viewModelFactory)
       .get(BreedDetailViewModel::class.java)
+      .also { it.restoreFrom(savedInstanceState) }
 
     if (savedInstanceState == null) {
       arguments?.apply {
@@ -65,11 +66,6 @@ class BreedDetailFragment : BaseFragment() {
   override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
     viewModel.saveTo(outState)
-  }
-
-  override fun onViewStateRestored(savedInstanceState: Bundle?) {
-    super.onViewStateRestored(savedInstanceState)
-    viewModel.restoreFrom(savedInstanceState)
   }
 
   private val breedObserver = Observer<CatBreed> { breed ->

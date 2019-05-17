@@ -54,7 +54,10 @@ class CatImagesFragment : BaseFragment() {
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
-    viewModel = ViewModelProviders.of(this, viewModelFactory).get(CatImagesViewModel::class.java)
+    viewModel = ViewModelProviders
+      .of(this, viewModelFactory)
+      .get(CatImagesViewModel::class.java)
+      .also { it.restoreFrom(savedInstanceState) }
 
     viewModel.catImages.observe(viewLifecycleOwner, Observer(imagesAdapter::submitList))
     viewModel.networkState.observe(viewLifecycleOwner, networkObserver)
@@ -69,11 +72,6 @@ class CatImagesFragment : BaseFragment() {
   override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
     viewModel.saveTo(outState)
-  }
-
-  override fun onViewStateRestored(savedInstanceState: Bundle?) {
-    super.onViewStateRestored(savedInstanceState)
-    viewModel.restoreFrom(savedInstanceState)
   }
 
   private val networkObserver = Observer<DataSourceState> { state ->
