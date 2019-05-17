@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import me.nickellis.caturday.injector
 import me.nickellis.caturday.ui.common.events.FragmentObserver
-import java.lang.Exception
 import javax.inject.Inject
 
 
