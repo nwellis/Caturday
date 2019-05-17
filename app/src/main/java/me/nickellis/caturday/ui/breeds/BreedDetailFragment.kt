@@ -50,26 +50,33 @@ class BreedDetailFragment : BaseFragment() {
     return inflater.inflate(R.layout.breed_detail_fragment, container, false)
   }
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-  }
-
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
     viewModel = ViewModelProviders
       .of(this, viewModelFactory)
       .get(BreedDetailViewModel::class.java)
-      .also { managePersistenceOf(it) }
 
-    if (viewModel.getBreed().value == null) {
-      val catBreed = arguments?.getParcelable<CatBreed>(ARG_BREED)
-        ?: throw IllegalStateException("This fragment must be constructed with newInstance")
-
-      viewModel.setBreed(catBreed)
+    if (savedInstanceState == null) {
+      arguments?.apply {
+        getParcelable<CatBreed>(ARG_BREED)
+          ?.also { remove(ARG_BREED) }
+          ?.let { viewModel.setBreed(it) }
+          ?: throw IllegalStateException("This fragment must be constructed with newInstance")
+      }
     }
 
     viewModel.getBreed().observe(viewLifecycleOwner, breedObserver)
+  }
+
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    viewModel.saveTo(outState)
+  }
+
+  override fun onViewStateRestored(savedInstanceState: Bundle?) {
+    super.onViewStateRestored(savedInstanceState)
+    viewModel.restoreFrom(savedInstanceState)
   }
 
   private val breedObserver = Observer<CatBreed> { breed ->
