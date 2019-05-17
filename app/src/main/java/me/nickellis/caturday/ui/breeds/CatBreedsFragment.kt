@@ -32,7 +32,7 @@ class CatBreedsFragment : BaseFragment() {
     fun newInstance() = CatBreedsFragment()
   }
 
-  private lateinit var viewModel: CatBreedsViewModel
+  private var viewModel: CatBreedsViewModel? = null
   private lateinit var breedsAdapter: CatBreedsPagedAdapter
 
   override fun onCreateView(
@@ -69,20 +69,20 @@ class CatBreedsFragment : BaseFragment() {
       .of(this, viewModelFactory)
       .get(CatBreedsViewModel::class.java)
       .also { it.restoreFrom(savedInstanceState) }
-
-    viewModel.catBreeds.observe(viewLifecycleOwner, Observer(breedsAdapter::submitList))
-    viewModel.networkState.observe(viewLifecycleOwner, networkObserver)
-
-    viewModel.getCatBreeds(CatBreedsQuery())
+      .apply {
+        catBreeds.observe(viewLifecycleOwner, Observer(breedsAdapter::submitList))
+        networkState.observe(viewLifecycleOwner, networkObserver)
+        getCatBreeds(CatBreedsQuery())
+      }
 
     v_try_again_button.setOnClickListener {
-      viewModel.retryFailedCall()
+      viewModel?.retryFailedCall()
     }
   }
 
   override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
-    viewModel.saveTo(outState)
+    viewModel?.saveTo(outState)
   }
 
   private val networkObserver = Observer<DataSourceState> { state ->
