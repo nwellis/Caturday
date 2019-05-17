@@ -68,6 +68,16 @@ class CatImagesFragment : BaseFragment() {
     }
   }
 
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    viewModel.saveTo(outState)
+  }
+
+  override fun onViewStateRestored(savedInstanceState: Bundle?) {
+    super.onViewStateRestored(savedInstanceState)
+    viewModel.restoreFrom(savedInstanceState)
+  }
+
   private val networkObserver = Observer<DataSourceState> { state ->
     v_progress_indicator.visible(state is DataSourceState.LoadInitial)
     v_try_again.visible(state is DataSourceState.Error)

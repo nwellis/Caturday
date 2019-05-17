@@ -1,5 +1,6 @@
 package me.nickellis.caturday.ui.images
 
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -12,13 +13,18 @@ import me.nickellis.caturday.repository.cat.CatImagesQuery
 import me.nickellis.caturday.repository.cat.CatRepository
 import me.nickellis.caturday.ui.common.state.DataSourceState
 import me.nickellis.caturday.ui.common.viewmodel.BaseViewModel
+import me.nickellis.caturday.ui.common.viewmodel.PersistentViewModel
 import javax.inject.Inject
 
 
 class CatImagesViewModel @Inject constructor(
   catRepository: CatRepository,
   appExecutors: AppExecutors
-): BaseViewModel(appExecutors) {
+): BaseViewModel(appExecutors), PersistentViewModel {
+
+  companion object {
+    private const val ARG_QUERY = "catImagesVM_query"
+  }
 
   private val factory: CatImagesDataFactory = CatImagesDataFactory(catRepository, appExecutors.networkIO)
 
@@ -38,6 +44,19 @@ class CatImagesViewModel @Inject constructor(
 
     networkState = Transformations
       .switchMap(factory.mutableLiveData) { data -> data.networkState }
+  }
+
+  override fun saveTo(bundle: Bundle) {
+    /**
+     * We don't save the cat images themselves as the data could be quite large being an infinite scrolling list
+     * and all.
+     */
+    bundle.putParcelable(ARG_QUERY, factory.query)
+  }
+
+  override fun restoreFrom(bundle: Bundle?) {
+    bundle?.getParcelable<CatImagesQuery>(ARG_QUERY)
+      ?.let { query -> setQuery(query) }
   }
 
   /**
