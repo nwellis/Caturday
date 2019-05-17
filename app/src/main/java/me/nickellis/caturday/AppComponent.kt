@@ -33,10 +33,6 @@ interface AppComponent {
   fun catRepository(): CatRepository
   //endregion
 
-  fun inject(activity: BaseActivity)
-  fun inject(activity: MainActivity)
-
   fun inject(fragment: BaseFragment)
-  fun inject(fragment: CatImagesFragment)
 
 }

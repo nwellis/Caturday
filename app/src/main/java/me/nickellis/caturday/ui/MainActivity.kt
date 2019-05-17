@@ -14,7 +14,6 @@ class MainActivity : BaseActivity(), FragmentObserver {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    injector.inject(this)
     setContentView(R.layout.activity_main)
 
     navigation = FragmentStack(
