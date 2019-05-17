@@ -61,7 +61,7 @@ class BreedDetailFragment : BaseFragment() {
 
     if (viewModel.getBreed().value == null) {
       val catBreed = arguments?.getParcelable<CatBreed>(ARG_BREED)
-        ?: throw IllegalArgumentException("This fragment must be constructed with newInstance")
+        ?: throw IllegalStateException("This fragment must be constructed with newInstance")
 
       viewModel.setBreed(catBreed)
     }
