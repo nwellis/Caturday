@@ -13,13 +13,6 @@ abstract class BaseFragment : Fragment() {
 
   @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
-  protected val sharedViewModel: SharedViewModel get() {
-    return activity?.run {
-      (this as? SharedViewModelProvider)?.sharedViewModel
-        ?: throw Exception("$context is not a SharedViewModelProvider")
-    } ?: throw Exception("Invalid activity")
-  }
-
   protected val fragmentObserver: FragmentObserver
     get() = activity as? FragmentObserver ?: throw Exception("$context is not a FragmentObserver")
 

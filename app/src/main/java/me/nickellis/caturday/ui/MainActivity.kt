@@ -1,24 +1,16 @@
 package me.nickellis.caturday.ui
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import me.nickellis.caturday.R
 import me.nickellis.caturday.injector
 import me.nickellis.caturday.ui.common.events.FragmentEvent
 import me.nickellis.caturday.ui.common.events.FragmentObserver
 import me.nickellis.caturday.ui.common.navigation.FragmentStack
 import me.nickellis.caturday.ui.main.MainFragment
-import javax.inject.Inject
 
-class MainActivity : BaseActivity(), SharedViewModelProvider, FragmentObserver {
+class MainActivity : BaseActivity(), FragmentObserver {
 
-  @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
   private lateinit var navigation: FragmentStack
-
-  override val sharedViewModel: SharedViewModel by lazy {
-    ViewModelProviders.of(this, viewModelFactory).get(SharedViewModel::class.java)
-  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
