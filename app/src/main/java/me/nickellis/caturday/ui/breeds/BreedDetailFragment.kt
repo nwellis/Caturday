@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.breed_detail_fragment.*
 
 import me.nickellis.caturday.R
@@ -19,8 +20,23 @@ class BreedDetailFragment : BaseFragment() {
 
   companion object {
     const val TAG = "BreedDetailFragment"
-    fun newInstance() = BreedDetailFragment()
+
+    /**
+     * Creates a view to display information about a specific cat breed.
+     *
+     * @param breed the cat breed to display
+     * @return a new instance of the [BreedDetailFragment]
+     */
+    fun newInstance(breed: CatBreed) = BreedDetailFragment().apply {
+      arguments = Bundle().apply {
+        putParcelable(ARG_BREED, breed)
+      }
+    }
+
+    private const val ARG_BREED = "breedDetail_breed"
   }
+
+  private lateinit var viewModel: BreedDetailViewModel
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -40,7 +56,17 @@ class BreedDetailFragment : BaseFragment() {
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
-    sharedViewModel.selectedBreed.observe(viewLifecycleOwner, breedObserver)
+
+    viewModel = ViewModelProviders.of(this, viewModelFactory).get(BreedDetailViewModel::class.java)
+
+    if (viewModel.getBreed().value == null) {
+      val catBreed = arguments?.getParcelable<CatBreed>(ARG_BREED)
+        ?: throw IllegalArgumentException("This fragment must be constructed with newInstance")
+
+      viewModel.setBreed(catBreed)
+    }
+
+    viewModel.getBreed().observe(viewLifecycleOwner, breedObserver)
   }
 
   private val breedObserver = Observer<CatBreed> { breed ->

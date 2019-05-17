@@ -1,12 +1,12 @@
 package me.nickellis.caturday.ui.common.events
 
-import me.nickellis.caturday.domain.CatBreed
+import androidx.fragment.app.Fragment
 
 interface FragmentObserver {
   fun onFragmentEvent(event: FragmentEvent)
 }
 
-sealed class FragmentEvent
-object FragmentBack: FragmentEvent()
-
-data class NewBreedDetail(val breed: CatBreed): FragmentEvent()
+sealed class FragmentEvent {
+  object Back: FragmentEvent()
+  class New(val fragment: Fragment): FragmentEvent()
+}

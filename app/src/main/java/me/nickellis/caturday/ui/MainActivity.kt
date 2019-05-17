@@ -1,19 +1,13 @@
 package me.nickellis.caturday.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import me.nickellis.caturday.R
 import me.nickellis.caturday.injector
-import me.nickellis.caturday.ui.breeds.BreedDetailFragment
-import me.nickellis.caturday.ui.breeds.CatBreedsFragment
-import me.nickellis.caturday.ui.common.events.FragmentBack
 import me.nickellis.caturday.ui.common.events.FragmentEvent
 import me.nickellis.caturday.ui.common.events.FragmentObserver
-import me.nickellis.caturday.ui.common.events.NewBreedDetail
 import me.nickellis.caturday.ui.common.navigation.FragmentStack
-import me.nickellis.caturday.ui.images.CatImagesFragment
 import me.nickellis.caturday.ui.main.MainFragment
 import javax.inject.Inject
 
@@ -56,11 +50,8 @@ class MainActivity : BaseActivity(), SharedViewModelProvider, FragmentObserver {
 
   override fun onFragmentEvent(event: FragmentEvent) {
     when (event) {
-      is FragmentBack -> onBackPressed()
-      is NewBreedDetail -> {
-        sharedViewModel.selectedBreed.postValue(event.breed)
-        navigation.push(BreedDetailFragment.newInstance())
-      }
+      is FragmentEvent.Back -> onBackPressed()
+      is FragmentEvent.New -> navigation.push(event.fragment)
     }
   }
 }

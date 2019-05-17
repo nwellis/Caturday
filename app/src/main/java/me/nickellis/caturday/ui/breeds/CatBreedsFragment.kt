@@ -16,7 +16,7 @@ import me.nickellis.caturday.injector
 import me.nickellis.caturday.ktx.visible
 import me.nickellis.caturday.repository.cat.CatBreedsQuery
 import me.nickellis.caturday.ui.BaseFragment
-import me.nickellis.caturday.ui.common.events.NewBreedDetail
+import me.nickellis.caturday.ui.common.events.FragmentEvent
 import me.nickellis.caturday.ui.common.list.BreedSelected
 import me.nickellis.caturday.ui.common.list.CatBreedsPagedAdapter
 import me.nickellis.caturday.ui.common.state.DataSourceState
@@ -49,7 +49,11 @@ class CatBreedsFragment : BaseFragment() {
     breedsAdapter = CatBreedsPagedAdapter()
       .onEvent { adapterEvent ->
         when (adapterEvent) {
-          is BreedSelected -> fragmentObserver.onFragmentEvent(NewBreedDetail(adapterEvent.breed))
+          is BreedSelected -> {
+            fragmentObserver.onFragmentEvent(
+              FragmentEvent.New(BreedDetailFragment.newInstance(adapterEvent.breed))
+            )
+          }
         }
       }
 
