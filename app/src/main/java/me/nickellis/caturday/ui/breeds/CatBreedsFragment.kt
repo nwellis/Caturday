@@ -27,6 +27,12 @@ class CatBreedsFragment : BaseFragment() {
 
   companion object {
     const val TAG = "CatBreedsFragment"
+
+    /**
+     * Creates a view to display an infinite scrolling list of cat breeds
+     *
+     * @return a new instance of the [CatBreedsFragment]
+     */
     fun newInstance() = CatBreedsFragment()
   }
 
