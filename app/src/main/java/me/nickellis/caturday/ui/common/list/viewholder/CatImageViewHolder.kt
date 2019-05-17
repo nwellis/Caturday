@@ -14,7 +14,6 @@ class CatImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
   LayoutInflater.from(parent.context).inflate(R.layout.cat_image_item, parent, false)
 ) {
   private val imageView = itemView.findViewById<ImageView>(R.id.v_image)
-  private val headerView = itemView.findViewById<TextView>(R.id.v_header)
 
   fun bindTo(image: CatImage?) {
     imageView.loadImageFromWeb(image?.url)

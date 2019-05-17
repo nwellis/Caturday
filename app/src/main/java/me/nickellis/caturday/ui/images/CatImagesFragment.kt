@@ -37,11 +37,6 @@ class CatImagesFragment : BaseFragment() {
   private lateinit var viewModel: CatImagesViewModel
   private lateinit var imagesAdapter: CatImagesPagedAdapter
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    injector.inject(this)
-  }
-
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?

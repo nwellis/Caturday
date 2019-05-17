@@ -39,11 +39,6 @@ class CatBreedsFragment : BaseFragment() {
   private lateinit var viewModel: CatBreedsViewModel
   private lateinit var breedsAdapter: CatBreedsPagedAdapter
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    injector.inject(this)
-  }
-
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?

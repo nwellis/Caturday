@@ -38,11 +38,6 @@ class BreedDetailFragment : BaseFragment() {
 
   private lateinit var viewModel: BreedDetailViewModel
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    injector.inject(this)
-  }
-
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
